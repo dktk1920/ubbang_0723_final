@@ -1,0 +1,24 @@
+요거는 그냥.. 제가 코드 짜면서 흐름이 자꾸 엉켜서 만들어 놓은겁니다ㅠㅠ
+
+----------------------------------------------------------------
+(1) 유저 메시지 수신
+     ↓
+(2) DynamoDB 저장 (pk, timestamp, role, content 등)
+     ↓
+(3) 일정 조건(주기적/WS 연결 시 등)일 때
+     ↓
+(4) DynamoDB에서 최근 100~200개 불러오기
+     ↓
+(5) FAISS 업데이트 (기존 벡터 + 새 벡터)
+----------------------------------------------------------------
+
+
+** baseprompt_builder
+    -> 유저에게 입력받은 값으로 기본적인 프롬프트 생성
+    -> WebSocket 접속 시: BasePromptBuilder로 프롬프트 생성
+    -> 프롬프트는 문자열로 만들어서 get_chatbot_response()에 전달
+    -> 겟챗봇reponse는 응답생성이므로 openai_helper.py에서 정의
+
+** opanai_helper
+    -> memory는 LangChain의 ConversationBufferMemory 기반
+
