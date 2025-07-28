@@ -1,0 +1,59 @@
+name: CI/CD Pipeline test
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'backend/**'
+      - 'frontend/**'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+      EKS_CLUSTER_NAME: ${{ secrets.EKS_CLUSTER_NAME }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # AWS 인증
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      # ECR 로그인
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # backend 도커 빌드 & 푸시
+      - name: Build and push backend Docker image
+        working-directory: ./backend
+        run: |
+          docker build -t $ECR_REGISTRY/test:latest .
+          docker push $ECR_REGISTRY/test:latest
+
+      # frontend 도커 빌드 & 푸시
+      - name: Build and push frontend Docker image
+        working-directory: ./frontend
+        run: |
+          docker build -t 502319971387.dkr.ecr.ap-northeast-2.amazonaws.com/test:latest1 --build-arg NEXT_PUBLIC_API_BASE_URL=https://ubbangfeeling.com/api .
+          docker push $ECR_REGISTRY/test:latest1
+
+      # Kubeconfig 적용
+      - name: Set up kubeconfig
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
+
+      # EKS 배포 (kubectl set image 방식 예시)
+      - name: Deploy to EKS
+        run: |
+          kubectl set image deployment/backend backend=$ECR_REGISTRY/test:latest -n default
+          kubectl set image deployment/frontend frontend=$ECR_REGISTRY/test:latest1 -n default
