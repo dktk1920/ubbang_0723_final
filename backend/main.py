@@ -21,7 +21,7 @@ from MySql.user_router import router as push_router
 from app.diary_router import router as diary_router
 from character.character_router import router as character_router
 from app.weather_router import router as weather_router
-#
+
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
