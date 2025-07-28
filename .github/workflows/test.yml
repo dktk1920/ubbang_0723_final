@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
 
       # AWS 인증
       - name: Configure AWS credentials
@@ -50,6 +53,7 @@ jobs:
       # Kubeconfig 적용
       - name: Set up kubeconfig
         run: |
+          mkdir -p $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG_DATA }}" | base64 -d > $HOME/.kube/config
 
       # EKS 배포 (kubectl set image 방식 예시)
