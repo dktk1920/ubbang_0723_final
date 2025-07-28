@@ -2,7 +2,7 @@ name: CI/CD Pipeline test
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "bread" ]
     paths:
       - 'backend/**'
       - 'frontend/**'
