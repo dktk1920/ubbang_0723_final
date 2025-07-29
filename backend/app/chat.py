@@ -46,7 +46,7 @@ def update_last_active_time(pk: str):
 from .dynamo_utils import get_diary_date_kst
 def save_message_to_dynamo(pk: str, userId: str, role: str, content: str, gender: str, tf: str):
     try:
-        ts = int(time.time())  # ✅ 여기서 매번 새로운 timestamp 생성
+        ts = int(time.time())  # ✅ 여기서 매번 새로운 timestamp 생성 , ts = int(time.time())
         diary_date = get_diary_date_kst(ts)
         table.put_item(
             Item={

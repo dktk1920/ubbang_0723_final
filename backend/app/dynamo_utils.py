@@ -7,11 +7,9 @@
 # get_recent_messages() 함수는 idle_checker.py에서
 # 유저 pk를 받아 해당 유저의 최근 메시지들을 DynamoDB에서 불러오는 역할이야.
 
-
-
 # app/dynamo_utils.py
 
-# app/dynamo_utils.py
+
 
 import os
 import time

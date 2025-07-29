@@ -102,32 +102,19 @@ def ask_gpt_for_image_prompt_from_summary(summary: str) -> str:
     You are creating a beautiful illustration prompt for DALL·E 3.
 
     🎯 Reference Style:
-    - a cute cartoon vertical standing croissant bread character in a warm pastel-toned flat-cartoon-style,
-     (layered round croissant with three visible segments)
-    2D and symmetrical, with thick black outlines, simple round body, short limbs, and dot eyes..
-    - The face shows emotion depending on the mood.
-    - The bread has a matte texture (no gloss!),  and a full front-facing body.
-    - Chubby and simplified, with dot eyes and a small mouth.
-    - No text, no gloss, no hair detail.
-    - The texture is soft and flat, like a vintage sticker illustration.
+    A dreamy kawaii-style night scene, soft vintage texture, thick outlines, chibi shapes, pastel colors, sparkles, magical mood — like Sanrio or Japanese sticker illustrations.
 
     📘 Diary Summary:
     \"\"\"{summary}\"\"\"
     🎨 Visual Style Rules:
-    - Cute cartoon bread character (based on a crescent-shaped or round bread)
-    - Thick black outlines, flat pastel colors, vintage paper texture
-    - Simple chubby body shape with short arms and legs
-    - No glossy lighting, no hair detail, no text or letters in the image
-    - Use dot eyes, and allow facial expressions to match the emotional tone of the diary
-    - Anthropomorphic food with arms, legs, and facial expression
-    - Thick black outlines, dot eyes, small round mouth
-    - No complex lighting, no shading, no photorealism!
+    - Sanrio-style or Japanese sticker illustration
+    - Dot eyes only, minimal facial expression
+    - Chubby, round proportions, thick black outlines
+    - Flat pastel colors with vintage paper texture
+    - No glossy eyes, no glossy lighting, no hair detail!!!!!!! plz
     - Characters must be symbolic, simplified, and not realistic
-    - Full-body, front-facing view with simple composition
-    - Flat pastel background with soft tone
-    - Do not include any text, letters, or writing!!!
-    - Include character pose + emotion + background + style in a natural sentence
-    - Create a background based on summarized chat content
+    - Keep the composition simple and avoid overly decorative or flashy elements
+    - Do not include any text, letters, signs, or writing in the image !!!!! plz!!!!!!
     
     📌 Prompt Instructions:
     - Focus on emotional storytelling through cozy or imaginative scenes
