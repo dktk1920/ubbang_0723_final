@@ -22,7 +22,7 @@ def get_weather_data(city="서울"):
     }
 
     city_query = city_map_ko_en.get(city, city)
-    url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city_query}&lang=ko"
+    url = f"https://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city_query}&lang=ko"
     response = requests.get(url)
     data = response.json()
 

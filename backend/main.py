@@ -132,7 +132,7 @@ async def chat_with_ai(chat: ChatInput):
         ]
         try:
             response = await client.chat.completions.create(
-                model="gpt-3.5-turbo",
+                model="gpt-4o",
                 messages=prompt_messages
             )
             reply_text = response.choices[0].message.content.strip()

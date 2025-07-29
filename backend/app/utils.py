@@ -85,7 +85,7 @@ def generate_diary_from_messages(messages: list[str]) -> str:
     """
 
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[{"role": "user", "content": prompt.strip()}]
     )
     return response.choices[0].message.content.strip()
@@ -123,7 +123,7 @@ def ask_gpt_for_image_prompt_from_summary(summary: str) -> str:
     Generate now:
     """.strip()
     response = client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[{"role": "user", "content": prompt}]
     )
 
@@ -195,6 +195,7 @@ def generate_warm_message_from_summary(summary: str) -> str:
     “하루 동안 참 많은 생각이 오갔던 것 같아. 그래도 너는 잘 버텼고, 그게 참 대단한 일이야. 잘 자, 나.”
     이런 느낌처럼, 부담 없이 받아들일 수 있는 메시지를 만들어줘.
     """
+
 
     response = client.chat.completions.create(
         model="gpt-4o",
