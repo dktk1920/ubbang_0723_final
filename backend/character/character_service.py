@@ -2,7 +2,7 @@
 
 import boto3
 from datetime import datetime, timezone, timedelta
-from character.character_utils import draw_random_character
+from .character_utils import draw_random_character
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table("UserCharacters")
