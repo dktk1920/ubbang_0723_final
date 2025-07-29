@@ -2,13 +2,25 @@
 
 import boto3
 from datetime import datetime, timezone, timedelta
-from .character_utils import draw_random_character
+from character.character_utils import draw_random_character
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table("UserCharacters")
 stat_table = dynamodb.Table("UserStats")  # chat_count, star_candy
 KST = timezone(timedelta(hours=9))
 datetime.now(KST).isoformat()
+
+#여기 밑이 추가한 부분
+def initialize_user_stats(pk: str):
+    """Initialize UserStats for a new user."""
+    stat_table.put_item(
+        Item={
+            "pk": str(pk),
+            "star_candy": 0,
+            "chat_count": 0,
+            "created_at": datetime.now(KST).isoformat()
+        }
+    )
 
 def unlock_random_character(pk: int) -> dict:
     # 별사탕 확인

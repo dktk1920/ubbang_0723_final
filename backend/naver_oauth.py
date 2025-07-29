@@ -3,6 +3,7 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from sqlalchemy.orm import Session
 from datetime import datetime
 import os, urllib.parse, httpx
+from character.character_service import initialize_user_stats
 
 from MySql.database import get_db
 from MySql.models import User
@@ -95,6 +96,8 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(new_user)
         user = new_user
+    # 4. UserStats 초기화 (DynamoDB)
+    initialize_user_stats(str(user.pk))
 
     access_token = create_access_token(data={"sub": str(user.pk)})
     refresh_token = create_refresh_token(data={"sub": str(user.pk)})
