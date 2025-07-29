@@ -53,7 +53,7 @@ app.include_router(naver_router, prefix="/api")
 app.include_router(push_router, prefix="/api")
 app.include_router(diary_router, prefix="/api/diary")
 app.include_router(character_router, prefix="/api")
-app.include_router(weather_router)
+app.include_router(weather_router, prefix="/api")
 
 try:
     Base.metadata.create_all(bind=engine)
