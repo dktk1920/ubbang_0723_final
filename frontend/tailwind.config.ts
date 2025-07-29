@@ -69,30 +69,37 @@ const config: Config = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
-  		keyframes: {
-  			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
-  			},
-  			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
-  			}
-  		},
-  		animation: {
-  			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
-  		}
-  	}
+      keyframes: {
+        walkBounce: {
+          "0%": { transform: "translateX(0) scaleX(1)" },
+          "25%": { transform: "translateX(120px) scaleX(1)" },
+          "50%": { transform: "translateX(240px) scaleX(-1)" },
+          "75%": { transform: "translateX(120px) scaleX(-1)" },
+          "100%": { transform: "translateX(0) scaleX(1)" },
+        },
+        longWalk: {
+          "0%": { transform: "translateX(-200%)" },
+          "100%": { transform: "translateX(700px)" }, // 꼭 단위(px) 붙이기!
+        },
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+
+      },
+      animation: {
+          walkBounce: "walkBounce 4s ease-in-out infinite",
+        longWalk: "longWalk 12s linear infinite", // ✅ 여기에 등록해야 className에서 쓸 수 있음
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+      },
+    },
   },
   plugins: [require("tailwindcss-animate")],
 };
+
 export default config;

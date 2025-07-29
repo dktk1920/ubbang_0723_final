@@ -8,6 +8,7 @@ import { Send } from "lucide-react"
 import MessageBubble from "@/components/message-bubble"
 import SessionSummary from "@/components/session-summary"
 import { useRouter } from "next/navigation"
+import { getDiaryDateFromTimestamp } from "@/utils/dateUtils";
 
 interface Message {
   id: string
@@ -42,6 +43,7 @@ export default function ChatInterface({ initialUserInfo }: ChatInterfaceProps) {
   const [isUserTyping, setIsUserTyping] = useState(false)
   const [currentAiMessage, setCurrentAiMessage] = useState<Message | null>(null)
   const [showGeneratingModal, setShowGeneratingModal] = useState(false)
+  const today = getDiaryDateFromTimestamp(Date.now());
 
 
   const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null)
@@ -59,6 +61,23 @@ export default function ChatInterface({ initialUserInfo }: ChatInterfaceProps) {
   const tf = activeUser.tf ?? "f"
 
     const [loading, setLoading] = useState(false)
+
+    const characterImages = [
+        "/images/1-Photoroom.png",
+      "/images/8-Photoroom.png",
+      "/images/17-Photoroom.png",
+      "/images/20-Photoroom.png",
+      "/images/25-Photoroom.png",
+      "/images/29-Photoroom.png",
+      "/images/34-Photoroom.png",
+      "/images/35-Photoroom.png",
+      "/images/38-Photoroom.png",
+      "/images/39-Photoroom.png",
+    ]
+
+    const walkingCharacters = characterImages
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3)
 
     const handleGenerate = async () => {
       try {
@@ -208,6 +227,8 @@ export default function ChatInterface({ initialUserInfo }: ChatInterfaceProps) {
     useEffect(() => {
       const loadChatHistory = async () => {
         try {
+            console.log("📅 diaryDate:", getDiaryDateFromTimestamp(Date.now()));
+
           const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/chat/history?pk=${pk}`);
           const data = await res.json();
 
@@ -216,24 +237,15 @@ export default function ChatInterface({ initialUserInfo }: ChatInterfaceProps) {
             return;
           }
 
-          const now = new Date();
-          const today6am = new Date(
-            now.getFullYear(),
-            now.getMonth(),
-            now.getDate(),
-            6, 0, 0, 0
-          );
-          if (now.getHours() < 6) {
-            today6am.setDate(today6am.getDate() - 1);
-          }
-
-          console.log("🕒 today6am 기준:", today6am.toISOString());
-          console.log("🕒 msgTime 비교값들:", data.map((d: any) => new Date(d.timestamp).toISOString()));
+          const today = getDiaryDateFromTimestamp(Date.now()); // KST 기준 오늘 날짜
 
           const filtered = data.filter((item: any) => {
-            const msgTime = new Date(item.timestamp);
-            return msgTime >= today6am;
+            const diaryDate = item.diary_date || getDiaryDateFromTimestamp(new Date(item.timestamp).getTime());
+            return diaryDate === today;
           });
+
+          console.log("📅 오늘 날짜:", today);
+          console.log("✅ 필터된 메시지 수:", filtered.length);
 
           const restoredMessages: Message[] = filtered.map((item: any) => ({
             id: item.id,
@@ -266,72 +278,141 @@ export default function ChatInterface({ initialUserInfo }: ChatInterfaceProps) {
 
 return (
   <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
-    {/* Header */}
+    {/* Header 전체 */}
     <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 shadow-sm px-6 py-4">
-      <div className="flex items-center justify-between">
-        {/* 프로필 */}
-        <div className="flex items-center space-x-3">
-          <img
-            src="/images/bread2.png"
-            alt="서포터 프로필"
-            className="w-10 h-10 rounded-full border-2 border-amber-200 shadow-sm"
-          />
-          <div>
-            <h1 className="text-lg font-bold text-gray-800">우빵이</h1>
-            <p className="text-sm text-gray-500">WhaT's your Feeling</p>
+      <div className="flex items-center justify-between w-full">
+
+        {/* 좌측: 프로필 + 감정일기 버튼 */}
+        <div className="flex items-center space-x-6 min-w-[300px]">
+          {/* 프로필 */}
+          <div className="flex items-center space-x-3">
+            <img
+              src="/images/bread2.png"
+              alt="서포터 프로필"
+              className="w-10 h-10 rounded-full border-2 border-amber-200 shadow-sm"
+            />
+            <div className="flex flex-col leading-tight">
+              <h1 className="text-lg font-bold text-gray-800">우빵이</h1>
+              <p className="text-sm text-gray-500">WhaT's your Feeling</p>
+            </div>
           </div>
+
+          {/* 감정일기 버튼 */}
+          <Button
+            onClick={!user?.isAnonymous ? handleGenerate : undefined}
+            disabled={loading || user?.isAnonymous}
+            className={`font-semibold px-5 py-2 rounded-xl shadow-md transition
+              ${user?.isAnonymous
+                ? "bg-gray-300 text-white cursor-not-allowed"
+                : "bg-amber-300 hover:bg-amber-400 text-white"}`}
+          >
+            {loading ? "생성 중..." : user?.isAnonymous ? "회원 전용" : "✨ 오늘 감정일기 생성하기"}
+          </Button>
         </div>
 
-        {/* 감정일기 생성 버튼 */}
-        <Button
-          onClick={handleGenerate}
-          disabled={loading}
-          className="bg-amber-300 hover:bg-amber-400 text-white font-semibold px-5 py-2 rounded-xl shadow-md transition"
-        >
-          {loading ? "생성 중..." : "✨ 오늘 감정일기 생성하기"}
-        </Button>
-      </div>
+        {/* 중앙: 걷는 캐릭터 애니메이션 */}
+        <div className="relative w-[1000px] h-20 overflow-hidden">
+          {walkingCharacters.map((src, i) => {
+            const duration = 10 + i * 5;
+            const animIndex = i % 3;
+            return (
+              <img
+                key={i}
+                src={src}
+                alt={`캐릭터${i}`}
+                className="absolute bottom-0 h-20"
+                style={{
+                  left: `${i * 50}px`,
+                  animationName: `walk${i}`,
+                  animationDuration: `${duration}s`,
+                  animationTimingFunction: 'ease-in-out',
+                  animationIterationCount: 'infinite',
+                }}
+              />
+            );
+          })}
+            {/* ✅ style은 가장 바깥 div 안에! */}
+    <style jsx global>{`
+      @keyframes walk0 {
+        0% {transform: translateX(0) scaleX(1);}
+        40% {transform: translateX(800px) scaleX(1);}
+        50% {transform: translateX(800px) scaleX(-1);}
+        90% {transform: translateX(0) scaleX(-1);}
+        100% {transform: translateX(0) scaleX(1);}
+      }
 
-      {/* 하단 버튼 영역 */}
-      <div className="flex justify-center gap-2 mt-5 flex-nowrap overflow-x-auto px-2">
-        <Button
-          size="sm"
-          onClick={() => router.push(`/${pk}/prologue`)}
-          className="bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap"
-        >
-          메인 페이지로
-        </Button>
-        <Button
-          size="sm"
-          className="bg-amber-100 hover:bg-amber-200 text-amber-800 font-medium px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap"
-        >
-          오늘도 고생했어
-        </Button>
-        <Button
-          size="sm"
-          onClick={() => router.push(`/${pk}/chat/emotion-diary`)}
-          className="bg-orange-100 hover:bg-orange-200 text-orange-800 font-medium px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap"
-        >
-          너를 추억해
-        </Button>
-        <Button
-          size="sm"
-          onClick={() => router.push(`/${pk}/chat/character-collection`)}
-          className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 font-medium px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap"
-        >
-          나 보러와
-        </Button>
-        <Button
-          size="sm"
-          onClick={() => router.push(`/${pk}/chat/profile`)}
-          className="bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-3 py-1.5 rounded-lg shadow-sm whitespace-nowrap"
-        >
-          이게 너야
-        </Button>
+      @keyframes walk1 {
+        0% {transform: translateX(0) scaleX(1);}
+        40% {transform: translateX(800px) scaleX(1);}
+        50% {transform: translateX(800px) scaleX(-1);}
+        90% {transform: translateX(0) scaleX(-1);}
+        100% {transform: translateX(0) scaleX(1);}
+      }
+
+      @keyframes walk2 {
+        0% {transform: translateX(0) scaleX(1);}
+        40% {transform: translateX(800px) scaleX(1);}
+        50% {transform: translateX(800px) scaleX(-1);}
+        90% {transform: translateX(0) scaleX(-1);}
+        100% {transform: translateX(0) scaleX(1);}
+      }
+    `}</style>
+  </div>
+
+        {/* 우측: 감정 버튼 그룹 */}
+        <div className="flex flex-row items-center space-x-2 justify-end min-w-[300px]">
+          <Button
+            size="sm"
+            onClick={() => router.push(`/${pk}/prologue`)}
+            className="bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-3 py-1.5 rounded-full shadow-sm"
+          >
+            메인 페이지
+          </Button>
+
+          <Button
+            size="sm"
+            disabled
+            className="bg-amber-100 text-amber-800 font-medium px-3 py-1.5 rounded-full shadow-sm cursor-default"
+          >
+            오늘도 고생했어
+          </Button>
+
+          <Button
+            size="sm"
+            onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/emotion-diary`) : undefined}
+            disabled={user?.isAnonymous}
+            className={`font-medium px-3 py-1.5 rounded-full shadow-sm
+              ${user?.isAnonymous
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-orange-100 hover:bg-orange-200 text-orange-800"}`}
+          >
+            너를 추억해
+          </Button>
+
+          <Button
+            size="sm"
+            onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/character-collection`) : undefined}
+            disabled={user?.isAnonymous}
+            className={`font-medium px-3 py-1.5 rounded-full shadow-sm
+              ${user?.isAnonymous
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800"}`}
+          >
+            나 보러와
+          </Button>
+
+          <Button
+            size="sm"
+            onClick={() => router.push(`/${pk}/chat/profile`)}
+            className="bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-3 py-1.5 rounded-full shadow-sm"
+          >
+            이게 너야
+          </Button>
+        </div>
       </div>
     </div>
 
-    {/* 모달 - 감정일기 생성 중 */}
+    {/* 모달 */}
     {showGeneratingModal && (
       <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50">
         <div className="bg-white rounded-xl shadow-lg p-6 text-center space-y-4 w-[300px]">
@@ -344,9 +425,10 @@ return (
     {/* 메시지 영역 */}
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
       <SessionSummary />
-      {[...messages, ...(currentAiMessage ? [{ ...currentAiMessage, id: `stream-${Date.now()}` }] : [])].map((message) => (
-       <MessageBubble key={message.id} message={message} />
-      ))}
+        {[...messages, ...(currentAiMessage ? [{ ...currentAiMessage, id: `stream-${Date.now()}` }] : [])].map((message) => (
+          <MessageBubble key={message.id} message={message} />
+        ))}
+
       {isTyping && (
         <div className="flex justify-start items-end space-x-3">
           <img
