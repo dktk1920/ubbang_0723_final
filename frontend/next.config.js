@@ -12,7 +12,7 @@ const nextConfig = {
     unoptimized: true,
   },
   experimental: {
-    allowedDevOrigins: ["http://192.168.0.39:3000"],  // ✅ 요 줄 추가!
+    allowedDevOrigins: ["https://192.168.0.39:3000"],  // ✅ 요 줄 추가!
   },
   webpack: (config) => {
     config.resolve.alias["@"] = path.resolve(__dirname)

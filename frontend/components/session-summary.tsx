@@ -16,7 +16,7 @@ export default function SessionSummary() {
   const [summaryData, setSummaryData] = useState<SummaryData | null>(null)
 
   useEffect(() => {
-  fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/weather-summary`)
+  fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}weather-summary`)
     .then((res) => res.json())
     .then((data) => setSummaryData(data))
     .catch(() => {
