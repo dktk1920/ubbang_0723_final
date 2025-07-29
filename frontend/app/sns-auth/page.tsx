@@ -6,7 +6,7 @@ export default function SnsAuthPage() {
   useEffect(() => {
     const goNaverLogin = async () => {
       try {
-        window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/naver/login`
+        window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/naver/login`
       } catch (error) {
         console.error("네이버 로그인 오류:", error)
       }
