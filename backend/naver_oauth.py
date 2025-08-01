@@ -96,9 +96,11 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         db.refresh(new_user)
         user = new_user
 
+        initialize_user_stats(user.pk)
+
     access_token = create_access_token(data={"sub": str(user.pk)})
     refresh_token = create_refresh_token(data={"sub": str(user.pk)})
-    initialize_user_stats(user.pk)
+
     store_refresh_token_to_db(user, refresh_token, db)  # ✅ 일반 로그인과 동일한 처리
 
     # 5. 최종 응답
