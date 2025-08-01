@@ -25,7 +25,7 @@ def naver_login():
         f"https://nid.naver.com/oauth2.0/authorize?"
         f"response_type=code"
         f"&client_id={client_id}"
-        f"&redirect_uri={urllib.parse.quote(redirect_uri)}"
+        f"&redirect_uri={redirect_uri}"
         f"&state={state}"
     )
 
@@ -126,7 +126,7 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         value=refresh_token,
         httponly=True,
         max_age=60 * 60 * 24 * 7,
-        secure=False,  # ⚠️ 실서비스면 True + HTTPS 필수
+        secure=True,  # ⚠️ 실서비스면 True + HTTPS 필수
         samesite="lax"
     )
     return res
