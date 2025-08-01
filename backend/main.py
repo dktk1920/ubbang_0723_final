@@ -36,8 +36,8 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 app = FastAPI()
 origins = [
-    "http://localhost:3000",
-    "http://192.168.0.39:3000"
+    "http://ubbangfeeling.com",
+    "http://www.ubbangfeeling.com"
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -48,13 +48,13 @@ app.add_middleware(
 )
 
 
-app.include_router(chat.router)
-app.include_router(user_router)
-app.include_router(naver_router)
-app.include_router(push_router)
-app.include_router(diary_router, prefix="/diary")
-app.include_router(character_router)
-app.include_router(weather_router)
+app.include_router(chat.router, prefix="/api")
+app.include_router(user_router, prefix="/api")
+app.include_router(naver_router, prefix="/api")
+app.include_router(push_router, prefix="/api")
+app.include_router(diary_router, prefix="/api/diary")
+app.include_router(character_router, prefix="/api")
+app.include_router(weather_router, prefix="/api")
 
 try:
     Base.metadata.create_all(bind=engine)
