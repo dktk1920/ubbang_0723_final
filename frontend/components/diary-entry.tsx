@@ -47,7 +47,7 @@ export default function DiaryEntry({ entry, onBack }: DiaryEntryProps) {
             <img
               src={entry.imageUrl ? `${entry.imageUrl}?t=${Date.now()}` : "/placeholder.svg"}
               alt={entry.title}
-              className="w-full max-h-[750px] object-contain rounded-t-lg bg-white"
+              className="w-full max-h-[500px] object-contain rounded-t-lg bg-white"
               onError={(e) => {
                 e.currentTarget.src = "/placeholder.svg"
               }}
@@ -105,4 +105,4 @@ export default function DiaryEntry({ entry, onBack }: DiaryEntryProps) {
       </div>
     </div>
   )
-}`  `
+}

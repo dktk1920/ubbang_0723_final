@@ -62,7 +62,7 @@ export default function EmotionDiary({ user }: EmotionDiaryProps) {
         emotion_level: entry.emotion_level ?? 3,
         message : entry.message ?? "",
       }))
-      parsed.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+
       setDiaryEntries(parsed)
     }
 
@@ -104,6 +104,35 @@ export default function EmotionDiary({ user }: EmotionDiaryProps) {
           </div>
         </div>
 
+        {/* Stats */}
+        {/*<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+                       <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-amber-600">{diaryEntries.length}</div>
+              <div className="text-sm text-gray-600">나랑 얼마나 얘기했게?</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-orange-600">7</div>
+              <div className="text-sm text-gray-600">나 자주 보러와</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-yellow-600">
+                {Math.round(
+                  (diaryEntries.filter((e) => e.emotion_level === 1 || e.emotion_level === 2).length / diaryEntries.length) *
+                    100
+                ) || 0}
+                %
+              </div>
+              <div className="text-sm text-gray-600">나랑 얘기하니까 좋지?</div>
+            </CardContent>
+          </Card>
+        </div>
+        */}
+
         {/* 📊 감정 흐름 보기 */}
         <div className="p-4">
         <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg">
@@ -137,49 +166,48 @@ export default function EmotionDiary({ user }: EmotionDiaryProps) {
               </CardContent>
             </Card>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {diaryEntries.map((entry, index) => {
-                const emotionInfo = getEmotionInfoByLevel(Number(entry.emotion_level ?? 3))
+            diaryEntries.map((entry) => {
+              const emotionInfo = getEmotionInfoByLevel(Number(entry.emotion_level ?? 3))
 
-                return (
-                  <Card
-                    key={entry.id ? `diary-${entry.id}` : `diary-fallback-${index}`}
-                    className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
-                    onClick={() => {
-                      if (!entry.id) {
-                        console.error("❌ entry.id 없음", entry)
-                      } else {
-                        router.push(`/${user.pk}/chat/emotion-diary/${entry.id}`)
-                      }
-                    }}
-                  >
-                    <CardContent className="p-0">
-                      <img
-                        src={entry.imageUrl ? `${entry.imageUrl}?t=${Date.now()}` : "/placeholder.svg"}
-                        onError={(e) => {
-                          console.error("이미지 로딩 실패:", entry.imageUrl)
-                          e.currentTarget.src = "/placeholder.svg"
-                        }}
-                        alt="감정 그림일기"
-                        className="w-full h-48 object-cover rounded-t-lg"
-                      />
-                      <div className="p-4 space-y-2">
-                        <div className={`rounded-lg px-4 py-2 text-center font-semibold text-sm ${emotionInfo.color}`}>
-                          {emotionInfo.emoji} {emotionInfo.label}
-                        </div>
-                        <p className="text-sm text-gray-600 line-clamp-3">{entry.summary}</p>
-                        <div className="text-xs text-gray-400">
-                          {new Date(entry.date).toLocaleDateString("ko-KR")}
-                        </div>
+              return (
+                <Card
+                  key={`diary-${entry.id}`}
+                  className="bg-white/80 backdrop-blur-sm border-0 shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer"
+                  onClick={() => {
+                    if (!entry.id) {
+                      console.error("❌ entry.id 없음", entry)
+                    } else {
+                      router.push(`/${user.pk}/chat/emotion-diary/${entry.id}`)
+                    }
+                  }}
+                >
+                  <CardContent className="p-0">
+                    <img
+                      src={entry.imageUrl ? `${entry.imageUrl}?t=${Date.now()}` : "/placeholder.svg"}
+                      onError={(e) => {
+                        console.error("이미지 로딩 실패:", entry.imageUrl)
+                        e.currentTarget.src = "/placeholder.svg"
+                      }}
+                      alt="감정 그림일기"
+                      className="w-full h-48 object-cover rounded-t-lg"
+                    />
+                    <div className="p-4 space-y-2">
+                      <div
+                        className={`rounded-lg px-4 py-2 text-center font-semibold text-sm ${emotionInfo.color}`}
+                      >
+                        {emotionInfo.emoji} {emotionInfo.label}
                       </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
+                      <p className="text-sm text-gray-600 line-clamp-3">{entry.summary}</p>
+                      <div className="text-xs text-gray-400">
+                        {new Date(entry.date).toLocaleDateString("ko-KR")}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            })
           )}
         </div>
-
       </div>
     </div>
   )

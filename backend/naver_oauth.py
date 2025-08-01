@@ -6,7 +6,6 @@ import os, urllib.parse, httpx
 
 from MySql.database import get_db
 from MySql.models import User
-from utils.token_storage import store_refresh_token_to_db
 
 # ✅ JWT 생성 함수 import
 from utils.jwt_utils import create_access_token, create_refresh_token
@@ -96,10 +95,9 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         db.refresh(new_user)
         user = new_user
 
-    access_token = create_access_token(data={"sub": str(user.pk)})
-    refresh_token = create_refresh_token(data={"sub": str(user.pk)})
-
-    store_refresh_token_to_db(user, refresh_token, db)  # ✅ 일반 로그인과 동일한 처리
+    # 4. JWT 생성 (Redis 저장 제거)
+    access_token = create_access_token(data={"sub": user.userId})
+    refresh_token = create_refresh_token(data={"sub": user.userId})
 
     # 5. 최종 응답
     res = JSONResponse(content={

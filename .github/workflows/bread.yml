@@ -50,7 +50,7 @@ jobs:
       - name: Build and push frontend Docker image
         working-directory: ./frontend
         run: |
-          docker build --no-cache -t 502319971387.dkr.ecr.ap-northeast-2.amazonaws.com/frontend:latest --build-arg NEXT_PUBLIC_API_BASE_URL=https://ubbangfeeling.com/api .
+          docker build -t 502319971387.dkr.ecr.ap-northeast-2.amazonaws.com/frontend:latest --build-arg NEXT_PUBLIC_API_BASE_URL=https://ubbangfeeling.com/api .
           docker push $ECR_REGISTRY/frontend:latest
 
       # Kubeconfig 적용

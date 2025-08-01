@@ -20,30 +20,30 @@ def get_diary_date_from_timestamp(ts: int) -> str:
     return dt.strftime("%Y-%m-%d")
 
 
-# def get_time_block(ts: int) -> str:
-#     """
-#     타임스탬프 기반으로 시간대를 '오전', '오후', '저녁'으로 분류
-#     """
-#     hour = datetime.fromtimestamp(ts, tz=KST_ZONEINFO).hour
-#     if hour < 12:
-#         return "오전"
-#     elif hour < 18:
-#         return "오후"
-#     else:
-#         return "저녁"
-#
-#
-# def group_logs_by_time_block(logs: list[dict]) -> dict[str, list[dict]]:
-#     """
-#     로그들을 '오전' / '오후' / '저녁' 시간대별로 묶는다.
-#     """
-#     blocks = defaultdict(list)
-#     for log in logs:
-#         block = get_time_block(log["timestamp"])
-#         blocks[block].append(log)
-#     return blocks
-#
-#
+def get_time_block(ts: int) -> str:
+    """
+    타임스탬프 기반으로 시간대를 '오전', '오후', '저녁'으로 분류
+    """
+    hour = datetime.fromtimestamp(ts, tz=KST_ZONEINFO).hour
+    if hour < 12:
+        return "오전"
+    elif hour < 18:
+        return "오후"
+    else:
+        return "저녁"
+
+
+def group_logs_by_time_block(logs: list[dict]) -> dict[str, list[dict]]:
+    """
+    로그들을 '오전' / '오후' / '저녁' 시간대별로 묶는다.
+    """
+    blocks = defaultdict(list)
+    for log in logs:
+        block = get_time_block(log["timestamp"])
+        blocks[block].append(log)
+    return blocks
+
+
 def get_dominant_emotion_topic_from_logs(logs: list[dict]) -> tuple[str, str]:
     """
     감정, 주제를 쌍으로 묶어 가장 많이 등장한 조합을 반환
@@ -92,7 +92,6 @@ def generate_diary_from_messages(messages: list[str]) -> str:
 
 
 # ------------------ 🎨 감정 기반 이미지 프롬프트 ----------------------------
-# ------------------ 🎨 감정 기반 이미지 프롬프트 ----------------------------
 def ask_gpt_for_image_prompt_from_summary(summary: str) -> str:
     """
     감정일기 요약을 바탕으로 DALL·E에 적합한 귀엽고 만화 스타일의 프롬프트를 생성합니다.
@@ -129,7 +128,7 @@ def ask_gpt_for_image_prompt_from_summary(summary: str) -> str:
     - Do not include any text, letters, or writing!!!
     - Include character pose + emotion + background + style in a natural sentence
     - Create a background based on summarized chat content
-
+    
     📌 Prompt Instructions:
     - Focus on emotional storytelling through cozy or imaginative scenes
     - Output only the prompt sentence, no explanation

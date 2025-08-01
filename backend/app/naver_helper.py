@@ -72,6 +72,7 @@ async def get_external_info(query: str, mode: str) -> str:
 {combined_text}
 
 아래는 네이버 뉴스/블로그/지식iN에서 찾은 검색 결과야.
+항상 참조가능항 사실적 진술을 말해.
 이 내용을 참고해서 최대한 정확하게, 친구처럼 대답해줘.
 말투는 system_prompt로 설정된 반말/존댓말을 그대로 유지해야 해.
 

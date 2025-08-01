@@ -35,8 +35,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 app = FastAPI()
 origins = [
-    "https://www.ubbangfeeling.com",
-    "https://ubbangfeeling.com"
+    "*"
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -47,14 +46,14 @@ app.add_middleware(
 )
 
 
-app.include_router(chat.router,prefix="/api")
-app.include_router(user_router,prefix="/api")
-app.include_router(naver_router,prefix="/api")
-app.include_router(push_router,prefix="/api")
+app.include_router(chat.router, prefix="/api")
+app.include_router(user_router, prefix="/api")
+app.include_router(naver_router, prefix="/api")
+app.include_router(push_router, prefix="/api")
 app.include_router(diary_router, prefix="/api/diary")
-app.include_router(character_router,prefix="/api")
-app.include_router(weather_router,prefix="/api")
-#
+app.include_router(character_router, prefix="/api")
+app.include_router(weather_router, prefix="/api")
+
 try:
     Base.metadata.create_all(bind=engine)
     logger.info("✅ 데이터베이스 연결 성공 및 테이블 생성 완료")

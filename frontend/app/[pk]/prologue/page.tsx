@@ -4,17 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter, useParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import {
-  MessageCircle,
-  BookOpen,
-  Gift,
-  Users,
-  Heart,
-  Sparkles,
-  Sun,
-  Coffee,
-  Lock,
-} from "lucide-react"
+import { MessageCircle, BookOpen, Gift, Users, Heart, Sparkles, Sun, Coffee } from "lucide-react"
 
 export default function ProloguePage() {
   const router = useRouter()
@@ -137,37 +127,25 @@ export default function ProloguePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {navigationItems.map((item) => {
             const IconComponent = item.icon
-            const isLocked = user?.isAnonymous && ["diary", "collection"].includes(item.id)
-
             return (
               <Card
                 key={`prologue-${item.id}`}
-                className={`group relative transition-all duration-300 border-0 bg-white/80 backdrop-blur-sm overflow-hidden ${
-                  isLocked ? "opacity-60 cursor-not-allowed" : "hover:scale-105 hover:shadow-xl cursor-pointer"
-                }`}
-                onClick={() => {
-                  if (!isLocked) router.push(item.route)
-                }}
+                className="group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl border-0 bg-white/80 backdrop-blur-sm overflow-hidden"
+                onClick={() => router.push(item.route)}
               >
                 <CardContent className="p-0">
-                  <div className={`${item.bgColor} p-6 transition-all duration-300`}>
+                  <div className={`${item.bgColor} p-6 transition-all duration-300 group-hover:bg-opacity-80`}>
                     <div className="flex items-start space-x-4">
                       <div
-                        className={`w-12 h-12 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center shadow-lg ${
-                          isLocked ? "" : "group-hover:scale-110 transition-transform duration-300"
-                        }`}
+                        className={`w-12 h-12 bg-gradient-to-br ${item.color} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
                       >
-                        {isLocked ? (
-                          <Lock className="w-6 h-6 text-white" />
-                        ) : (
-                          <IconComponent className="w-6 h-6 text-white" />
-                        )}
+                        <IconComponent className="w-6 h-6 text-white" />
                       </div>
                       <div className="flex-1">
-                        <h3 className={`text-lg font-semibold ${item.textColor} mb-2`}>
+                        <h3 className={`text-lg font-semibold ${item.textColor} mb-2 group-hover:text-opacity-90`}>
                           {item.title}
                         </h3>
-                        <p className="text-gray-600 text-sm leading-relaxed">
+                        <p className="text-gray-600 text-sm leading-relaxed group-hover:text-gray-700">
                           {item.description}
                         </p>
                       </div>
@@ -176,27 +154,38 @@ export default function ProloguePage() {
                     <div className="mt-4 flex justify-end">
                       <Button
                         size="sm"
-                        disabled={isLocked}
-                        className={`border-0 transition-all duration-300 text-white ${
-                          isLocked
-                            ? "bg-gray-300 cursor-not-allowed"
-                            : `bg-gradient-to-r ${item.color} hover:shadow-lg group-hover:scale-105`
-                        }`}
+                        className={`bg-gradient-to-r ${item.color} hover:shadow-lg text-white border-0 transition-all duration-300 group-hover:scale-105`}
                       >
-                        {isLocked ? "잠금됨" : "시작하기"}
+                        시작하기
                       </Button>
                     </div>
-
-                    {isLocked && (
-                      <div className="absolute top-2 right-2 text-xs text-gray-500 bg-white/70 px-2 py-0.5 rounded-full shadow">
-                        회원만 이용 가능
-                      </div>
-                    )}
                   </div>
                 </CardContent>
               </Card>
             )
           })}
+        </div>
+
+        {/* Quick Stats */}
+        <div className="mt-8 grid grid-cols-3 gap-4">
+          <Card className="bg-white/60 backdrop-blur-sm border-0 shadow-sm">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-amber-600">7</div>
+              <div className="text-xs text-gray-600">함께한 날</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white/60 backdrop-blur-sm border-0 shadow-sm">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-orange-600">23</div>
+              <div className="text-xs text-gray-600">나눈 대화</div>
+            </CardContent>
+          </Card>
+          <Card className="bg-white/60 backdrop-blur-sm border-0 shadow-sm">
+            <CardContent className="p-4 text-center">
+              <div className="text-2xl font-bold text-yellow-600">5</div>
+              <div className="text-xs text-gray-600">모은 친구</div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Daily Quote */}

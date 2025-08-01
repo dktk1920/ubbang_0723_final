@@ -10,7 +10,7 @@ export default function AnonymousPage() {
     <AnonymousOnboarding
       onComplete={(userInfo) => {
         // ✅ 유저 등록 후 → /{pk}/chat 으로 이동
-        router.push(`/${userInfo.pk}/prologue`)
+        router.push(`/${userInfo.pk}/chat`)
       }}
       onBack={() => {
         // 🔙 로그인으로 돌아가기

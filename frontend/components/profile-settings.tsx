@@ -363,9 +363,9 @@ useEffect(() => {
               알림 설정 저장
             </Button>
             </div>
+
           </CardContent>
         </Card>
-
         {/* ✅ 푸시 구독 컴포넌트 삽입 */}
         <PushSubscriber enabled={notifications} time={notificationTime} />
 

@@ -20,4 +20,3 @@ python-jose
 python-multipart
 aiofiles
 bcrypt<4.0
-django-scheduler

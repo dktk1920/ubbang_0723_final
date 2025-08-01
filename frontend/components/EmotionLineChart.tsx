@@ -62,14 +62,14 @@ export default function EmotionLineChart({ data }: Props) {
   const chartData = fillMissingDates(data, month, year)
 
   return (
-    <div className="w-full mt-6 p-6 rounded-xl shadow-md bg-white border border-gray-200 overflow-visible">
+    <div className="w-full mt-6 p-6 rounded-xl shadow-md bg-white border border-gray-200">
       <h2 className="text-xl font-bold text-orange-500 mb-4 text-center">
         📈 이번 달 감정 흐름
       </h2>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart
           data={chartData}
-          margin={{ top:30, right: 40, bottom: 20, left: 10 }} // ✅ y축 글자 안겹치도록 여백 확보
+          margin={{ top: 20, right: 20, bottom: 20, left: 10 }} // ✅ y축 글자 안겹치도록 여백 확보
         >
           <XAxis
             dataKey="date"
@@ -80,7 +80,7 @@ export default function EmotionLineChart({ data }: Props) {
           />
           <YAxis
             reversed
-            domain={[0.8, 5]}
+            domain={[1, 5]}
             ticks={[1, 2, 3, 4, 5]}
             allowDataOverflow={true}
             tickFormatter={(v) => levelLabelMap[v as number]}
@@ -106,8 +106,8 @@ export default function EmotionLineChart({ data }: Props) {
             stroke="#fb923c"
             strokeWidth={3}
             dot={{ r: 4, fill: "#f97316", strokeWidth: 0 }}
-            activeDot={false}
-            connectNulls={true}
+            activeDot={{ r: 6 }}
+            connectNulls={false}
           />
         </LineChart>
       </ResponsiveContainer>
