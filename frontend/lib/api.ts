@@ -1,4 +1,4 @@
-xport const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
+export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
   const userString = localStorage.getItem("user");
   const user = userString ? JSON.parse(userString) : null;
   const token = user?.access_token;
