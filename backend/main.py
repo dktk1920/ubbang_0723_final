@@ -35,7 +35,8 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 app = FastAPI()
 origins = [
-    "*"
+    "https://www.ubbangfeeling.com",
+    "https://ubbangfeeling.com"
 ]
 app.add_middleware(
     CORSMiddleware,

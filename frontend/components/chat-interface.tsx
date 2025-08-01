@@ -278,13 +278,11 @@ export default function ChatInterface({ initialUserInfo }: ChatInterfaceProps) {
 
 return (
   <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
-    {/* Header 전체 */}
-    <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 shadow-sm px-6 py-4">
-      <div className="flex items-center justify-between w-full">
+    <div className="bg-white/90 backdrop-blur-sm border-b border-gray-200 shadow-sm px-4 py-4">
+      <div className="flex flex-col md:flex-row justify-between gap-4 md:items-center">
 
         {/* 좌측: 프로필 + 감정일기 버튼 */}
-        <div className="flex items-center space-x-6 min-w-[300px]">
-          {/* 프로필 */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3">
           <div className="flex items-center space-x-3">
             <img
               src="/images/bread2.png"
@@ -297,73 +295,25 @@ return (
             </div>
           </div>
 
-          {/* 감정일기 버튼 */}
           <Button
             onClick={!user?.isAnonymous ? handleGenerate : undefined}
             disabled={loading || user?.isAnonymous}
-            className={`font-semibold px-5 py-2 rounded-xl shadow-md transition
-              ${user?.isAnonymous
+            className={`w-full sm:w-auto font-semibold px-5 py-2 rounded-xl shadow-md transition ${
+              user?.isAnonymous
                 ? "bg-gray-300 text-white cursor-not-allowed"
-                : "bg-amber-300 hover:bg-amber-400 text-white"}`}
+                : "bg-amber-300 hover:bg-amber-400 text-white"
+            }`}
           >
             {loading ? "생성 중..." : user?.isAnonymous ? "회원 전용" : "✨ 오늘 감정일기 생성하기"}
           </Button>
         </div>
 
-        {/* 중앙: 걷는 캐릭터 애니메이션
-        <div className="relative w-[1000px] h-20 overflow-hidden">
-          {walkingCharacters.map((src, i) => {
-            const duration = 10 + i * 5;
-            const animIndex = i % 3;
-            return (
-              <img
-                key={i}
-                src={src}
-                alt={`캐릭터${i}`}
-                className="absolute bottom-0 h-20"
-                style={{
-                  left: `${i * 50}px`,
-                  animationName: `walk${i}`,
-                  animationDuration: `${duration}s`,
-                  animationTimingFunction: 'ease-in-out',
-                  animationIterationCount: 'infinite',
-                }}
-              />
-            );
-          })}
-    <style jsx global>{`
-      @keyframes walk0 {
-        0% {transform: translateX(0) scaleX(1);}
-        40% {transform: translateX(800px) scaleX(1);}
-        50% {transform: translateX(800px) scaleX(-1);}
-        90% {transform: translateX(0) scaleX(-1);}
-        100% {transform: translateX(0) scaleX(1);}
-      }
-
-      @keyframes walk1 {
-        0% {transform: translateX(0) scaleX(1);}
-        40% {transform: translateX(800px) scaleX(1);}
-        50% {transform: translateX(800px) scaleX(-1);}
-        90% {transform: translateX(0) scaleX(-1);}
-        100% {transform: translateX(0) scaleX(1);}
-      }
-
-      @keyframes walk2 {
-        0% {transform: translateX(0) scaleX(1);}
-        40% {transform: translateX(800px) scaleX(1);}
-        50% {transform: translateX(800px) scaleX(-1);}
-        90% {transform: translateX(0) scaleX(-1);}
-        100% {transform: translateX(0) scaleX(1);}
-      }
-    `}</style>
-  </div>*/}
-
-        {/* 우측: 감정 버튼 그룹 (반응형) */}
-        <div className="flex flex-wrap justify-end gap-x-2 gap-y-2 min-w-[280px] md:min-w-[300px] max-w-full">
+        {/* 우측: 감정 버튼들 */}
+        <div className="flex flex-wrap justify-start gap-2">
           <Button
             size="sm"
             onClick={() => router.push(`/${pk}/prologue`)}
-            className="bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto"
+            className="w-full sm:w-auto bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-4 py-2 rounded-full shadow-sm"
           >
             메인 페이지
           </Button>
@@ -371,43 +321,43 @@ return (
           <Button
             size="sm"
             disabled
-            className="bg-amber-100 text-amber-800 font-medium px-3 py-1.5 rounded-full shadow-sm cursor-default w-full sm:w-auto"
+            className="w-full sm:w-auto bg-amber-100 text-amber-800 font-medium px-4 py-2 rounded-full shadow-sm cursor-default"
           >
-            채팅하기
+            오늘도 고생했어
           </Button>
 
           <Button
             size="sm"
             onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/emotion-diary`) : undefined}
             disabled={user?.isAnonymous}
-            className={`font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto ${
+            className={`w-full sm:w-auto font-medium px-4 py-2 rounded-full shadow-sm ${
               user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-orange-100 hover:bg-orange-200 text-orange-800"
             }`}
           >
-            감정일기 보러가기
+            너를 추억해
           </Button>
 
           <Button
             size="sm"
             onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/character-collection`) : undefined}
             disabled={user?.isAnonymous}
-            className={`font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto ${
+            className={`w-full sm:w-auto font-medium px-4 py-2 rounded-full shadow-sm ${
               user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800"
             }`}
           >
-            빵 캐릭터 콜렉션
+            나 보러와
           </Button>
 
           <Button
             size="sm"
             onClick={() => router.push(`/${pk}/chat/profile`)}
-            className="bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto"
+            className="w-full sm:w-auto bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-4 py-2 rounded-full shadow-sm"
           >
-            프로필 관리
+            이게 너야
           </Button>
         </div>
       </div>
