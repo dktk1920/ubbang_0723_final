@@ -224,57 +224,57 @@ export default function ChatInterface({ initialUserInfo }: ChatInterfaceProps) {
     }
   }
 
-    useEffect(() => {
-      const loadChatHistory = async () => {
-        try {
-            console.log("📅 diaryDate:", getDiaryDateFromTimestamp(Date.now()));
+useEffect(() => {
+  const loadChatHistory = async () => {
+    try {
+      const today = getDiaryDateFromTimestamp(Date.now()); // 정확한 오늘 날짜
+      console.log("📅 diaryDate:", today);
 
-          const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/chat/history?pk=${pk}`);
-          const data = await res.json();
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/chat/history?pk=${pk}`);
+      const data = await res.json();
 
-          if (!Array.isArray(data)) {
-            console.error("❌ 배열이 아닌 응답:", data);
-            return;
-          }
-
-          const today = getDiaryDateFromTimestamp(Date.now()); // KST 기준 오늘 날짜
-
-          const filtered = data.filter((item: any) => {
-            const diaryDate = item.diary_date || getDiaryDateFromTimestamp(new Date(item.timestamp).getTime());
-            return diaryDate === today;
-          });
-
-          console.log("📅 오늘 날짜:", today);
-          console.log("✅ 필터된 메시지 수:", filtered.length);
-
-          const restoredMessages: Message[] = filtered.map((item: any) => ({
-            id: item.id,
-            content: item.content,
-            sender: item.sender,
-            timestamp: new Date(item.timestamp),
-          }));
-
-          const hasGreeting = restoredMessages.some((msg) => msg.id === "GREETING");
-
-          if (!hasGreeting) {
-            restoredMessages.unshift({
-              id: "GREETING",
-              content: `안녕하세요 ${user?.name ?? initialUserInfo.name}님! 저는 우빵이입니다. 오늘 하루는 어떠셨나요? 편안하게 이야기해 주세요.`,
-              sender: "ai",
-              timestamp: new Date(),
-            });
-          }
-
-          setMessages(restoredMessages);
-        } catch (err) {
-          console.error("❌ 대화 기록 불러오기 실패:", err);
-        }
-      };
-
-      if (pk) {
-        loadChatHistory();
+      if (!Array.isArray(data)) {
+        console.error("❌ 배열이 아닌 응답:", data);
+        return;
       }
-    }, [pk]);
+
+      const filtered = data.filter((item: any) => {
+        const diaryDate =
+          item.diary_date || getDiaryDateFromTimestamp(new Date(item.timestamp).getTime());
+        return diaryDate === today;
+      });
+
+      console.log("📅 오늘 날짜:", today);
+      console.log("✅ 필터된 메시지 수:", filtered.length);
+
+      const restoredMessages: Message[] = filtered.map((item: any) => ({
+        id: item.id,
+        content: item.content,
+        sender: item.sender,
+        timestamp: new Date(item.timestamp),
+      }));
+
+      const hasGreeting = restoredMessages.some((msg) => msg.id === "GREETING");
+
+      if (!hasGreeting) {
+        restoredMessages.unshift({
+          id: "GREETING",
+          content: `안녕하세요 ${user?.name ?? initialUserInfo.name}님! 저는 우빵이입니다. 오늘 하루는 어떠셨나요? 편안하게 이야기해 주세요.`,
+          sender: "ai",
+          timestamp: new Date(),
+        });
+      }
+
+      setMessages(restoredMessages);
+    } catch (err) {
+      console.error("❌ 대화 기록 불러오기 실패:", err);
+    }
+  };
+
+  if (pk) {
+    loadChatHistory();
+  }
+}, [pk]);
 
 return (
   <div className="flex flex-col h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50">
