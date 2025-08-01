@@ -1,5 +1,5 @@
 "use client"
-
+import { fetchWithAuth } from "@/lib/api"
 import { useState, useRef, useEffect } from "react"
 import { useUser } from "@/hooks/useUser"
 import { Input } from "@/components/ui/input"
@@ -230,7 +230,7 @@ useEffect(() => {
       const today = getDiaryDateFromTimestamp(Date.now()); // 정확한 오늘 날짜
       console.log("📅 diaryDate:", today);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/chat/history?pk=${pk}`);
+      const res = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/chat/history?pk=${pk}`);
       const data = await res.json();
 
       if (!Array.isArray(data)) {

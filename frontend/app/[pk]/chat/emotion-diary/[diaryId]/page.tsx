@@ -1,5 +1,5 @@
 "use client"
-
+import { fetchWithAuth } from "@/lib/api"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
 import DiaryEntry from "@/components/diary-entry"
@@ -10,7 +10,7 @@ export default function DiaryEntryPage() {
 
   useEffect(() => {
     const fetchEntry = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/diary/${diaryId}?pk=${pk}`)
+      const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/diary/${diaryId}?pk=${pk}`)
       const data = await res.json()
 
       setEntry({

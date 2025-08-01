@@ -50,7 +50,7 @@ export default function ExtraInfoPage() {
   const handleSubmit = async () => {
     if (!pk) return
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/update-info`, {
+    const res = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/update-info`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

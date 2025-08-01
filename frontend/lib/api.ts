@@ -1,26 +1,21 @@
-import { useUser } from "@/hooks/useUser";
-
-export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
-  const { user } = useUser();
+xport const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
+  const userString = localStorage.getItem("user");
+  const user = userString ? JSON.parse(userString) : null;
   const token = user?.access_token;
 
   const headers = {
     ...options.headers,
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
-  const response = await fetch(url, {
+  const response = await fetchwithAuth(url, {
     ...options,
     headers,
   });
 
   if (response.status === 401) {
-    // Handle unauthorized access, e.g., redirect to login
-    window.location.href = '/';
+    window.location.href = "/";
   }
 
   return response;

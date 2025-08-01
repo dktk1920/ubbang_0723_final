@@ -59,14 +59,14 @@ export default function CharacterCollection({ user }: CharacterCollectionProps) 
   const [userStats, setUserStats] = useState<UserStats>({ totalChats: 0, starCandy: 0, unlockedCount: 0, totalCharacters: 0 });
 
   useEffect(() => {
-    const fetchAll = async () => {
+    const fetchwithAuthAll = async () => {
       // 캐릭터 목록
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/collection/${user.pk}`);
+      const res = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/collection/${user.pk}`);
       const data = await res.json();
       const mapped: Character[] = data.map(mapCharacterApiToComponent);
       setCharacters(mapped);
       // 유저 통계
-      const statsRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/user-stats/${user.pk}`);
+      const statsRes = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/user-stats/${user.pk}`);
       if (statsRes.status === 404) {
         alert("회원가입 정보가 아직 반영되지 않았습니다. 잠시 후 다시 시도해 주세요.");
         setTimeout(() => window.location.reload(), 2000);
@@ -80,7 +80,7 @@ export default function CharacterCollection({ user }: CharacterCollectionProps) 
         totalCharacters: mapped.length,
       });
     };
-    if (user.pk) fetchAll();
+    if (user.pk) fetchwithAuthAll();
   }, [user.pk]);
 
   const filteredCharacters = characters.filter(
@@ -130,9 +130,9 @@ export default function CharacterCollection({ user }: CharacterCollectionProps) 
     }
   }
 
-  // 캐릭터 목록 fetch 함수 분리
-  const fetchCharacters = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/collection/${user.pk}`);
+  // 캐릭터 목록 fetchwithAuth 함수 분리
+  const fetchwithAuthCharacters = async () => {
+    const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/collection/${user.pk}`);
     const data = await response.json();
     if (!Array.isArray(data)) {
       console.warn("캐릭터 목록 응답이 배열이 아님:", data);
@@ -149,7 +149,7 @@ export default function CharacterCollection({ user }: CharacterCollectionProps) 
   const handleGachaClick = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/unlock-random`, {
+      const res = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/unlock-random`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pk: user.pk })
@@ -159,13 +159,13 @@ export default function CharacterCollection({ user }: CharacterCollectionProps) 
         alert(data.detail || "뽑기 실패: 별사탕이 부족합니다!");
         return;
       }
-      // 캐릭터 목록 fetch
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/collection/${user.pk}`);
+      // 캐릭터 목록 fetchwithAuth
+      const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/collection/${user.pk}`);
       const list = await response.json();
       const mapped = list.map(mapCharacterApiToComponent);
       setCharacters(mapped);
-      // 별사탕/수집 캐릭터 수 fetch
-      const statsRes = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/user-stats/${user.pk}`);
+      // 별사탕/수집 캐릭터 수 fetchwithAuth
+      const statsRes = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/character/user-stats/${user.pk}`);
       const stats = await statsRes.json();
       setUserStats({
         totalChats: stats.chat_count,

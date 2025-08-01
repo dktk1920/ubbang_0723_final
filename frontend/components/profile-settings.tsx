@@ -71,7 +71,7 @@ useEffect(() => {
       }
       console.log("📦 PATCH 보내는 데이터:", payload)
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/update-user`, {
+        const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/update-user`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -98,7 +98,7 @@ useEffect(() => {
       const confirmDelete = window.confirm("정말 계정을 삭제하시겠어요?");
       if (!confirmDelete) return;
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/delete-user`, {
+        const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/delete-user`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -306,7 +306,7 @@ useEffect(() => {
               <Button
                 onClick={async () => {
                   if (!user) return
-                  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/update-user`, {
+                  const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/update-user`, {
                     method: "PATCH",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({

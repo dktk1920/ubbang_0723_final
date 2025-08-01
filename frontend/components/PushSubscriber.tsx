@@ -68,7 +68,7 @@ export default function PushSubscriber({ enabled, time }: Props) {
         const serialized = subscription.toJSON()
         console.log("📨 구독 정보 서버에 전송 중...", serialized)
 
-        await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/save-subscription`, {
+        await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/save-subscription`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

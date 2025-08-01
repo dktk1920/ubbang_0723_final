@@ -18,7 +18,7 @@ function CallbackHandler() {
 
     const exchangeCode = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/naver/token`, {
+        const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/naver/token`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code, state }),
@@ -29,9 +29,12 @@ function CallbackHandler() {
 
         if (result.success) {
           const user = result.user
+          const access_token = result.access_token
 
-          localStorage.setItem("access_token", result.access_token)
-          localStorage.setItem("user", JSON.stringify(user))
+          localStorage.setItem("user", JSON.stringify({
+            ...user,
+            access_token
+          }))
 
           const pk = user.pk
           if (!pk) {

@@ -118,7 +118,7 @@ const handleSubmit = async () => {
 
   try {
     const calculatedAge = calculateAge(formData.birthDate)
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/signup`, {
+    const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
