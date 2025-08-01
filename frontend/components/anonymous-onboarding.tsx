@@ -1,4 +1,5 @@
 "use client"
+import { fetchWithAuth } from "@/lib/api";
 
 import { useState } from "react"
 import { useUser } from "@/hooks/useUser"

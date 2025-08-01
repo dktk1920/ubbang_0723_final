@@ -1,4 +1,5 @@
 "use client"
+import { fetchWithAuth } from "@/lib/api";
 
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"

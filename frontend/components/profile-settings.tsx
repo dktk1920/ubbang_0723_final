@@ -1,4 +1,5 @@
 "use client"
+import { fetchWithAuth } from "@/lib/api";
 import PushSubscriber from "@/components/PushSubscriber"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"

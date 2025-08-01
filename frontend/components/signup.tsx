@@ -1,5 +1,5 @@
 "use client"
-
+import { fetchWithAuth } from "@/lib/api"
 import { useUser } from "@/hooks/useUser"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"

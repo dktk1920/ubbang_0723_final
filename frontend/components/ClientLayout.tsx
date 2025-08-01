@@ -1,4 +1,5 @@
 "use client"
+import { fetchWithAuth } from "@/lib/api";
 
 import { useEffect } from "react"
 
