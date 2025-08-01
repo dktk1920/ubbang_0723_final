@@ -21,14 +21,16 @@ def naver_login():
     redirect_uri = os.getenv("NAVER_REDIRECT_URI")
     state = "RANDOM_STATE"
 
+    encoded_redirect_uri = urllib.parse.quote(redirect_uri, safe='')  # ✅ 완전 인코딩
+
     login_url = (
         f"https://nid.naver.com/oauth2.0/authorize?"
         f"response_type=code"
         f"&client_id={client_id}"
-        f"&redirect_uri={urllib.parse.quote(redirect_uri)}"
+        f"&redirect_uri={encoded_redirect_uri}"
         f"&state={state}"
     )
-    print("✅ 네이버 로그인 URL:", login_url)  # <- 로그 찍기
+    print("✅ 네이버 로그인 URL:", login_url)
     return RedirectResponse(login_url)
 
 
