@@ -29,6 +29,8 @@ function CallbackHandler() {
 
         if (result.success) {
           const user = result.user
+
+          localStorage.setItem("access_token", result.access_token)
           localStorage.setItem("user", JSON.stringify(user))
 
           const pk = user.pk
