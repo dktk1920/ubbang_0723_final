@@ -4,7 +4,7 @@ from .BasePrompt_builder import BasePromptBuilder
 
 router = APIRouter()
 
-@router.get("/api/weather-summary")
+@router.get("/weather-summary")
 async def get_weather_summary():
     # system_prompt = BasePromptBuilder(gender="female", mode="banmal", age=20).build()
     result = await generate_weather_summary()
