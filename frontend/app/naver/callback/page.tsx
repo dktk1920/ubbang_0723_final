@@ -26,6 +26,7 @@ function CallbackHandler() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code, state }),
+          credentials: "include", // ✅ 추가
         });
 
         const result = await response.json();
