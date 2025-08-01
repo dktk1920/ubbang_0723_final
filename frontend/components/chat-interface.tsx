@@ -239,8 +239,20 @@ useEffect(() => {
       }
 
     const filtered = data.filter((item: any) => {
-      const diaryDate = item.diary_date ?? getDiaryDateFromTimestamp(item.timestamp);
-      return diaryDate === today;
+      const fallbackDate = getDiaryDateFromTimestamp(item.timestamp);
+      const diaryDate = item.diary_date || fallbackDate;
+
+      const isToday = diaryDate === today;
+
+      console.log("🔍 체크", {
+        timestamp: item.timestamp,
+        diary_date: item.diary_date,
+        fallbackDate,
+        today,
+        isToday,
+      });
+
+      return isToday;
     });
 
       console.log("📅 오늘 날짜:", today);
