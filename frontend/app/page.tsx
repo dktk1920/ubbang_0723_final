@@ -54,7 +54,7 @@
 //             onClick={() => setCurrentScreen("chat")}
 //             className="bg-amber-100 hover:bg-amber-200 text-amber-800 border-amber-200"
 //           >
-//             오늘도 고생했어
+//             채팅하기
 //           </Button>
 //           <Button
 //             variant={currentScreen === "diary" ? "default" : "outline"}
@@ -62,7 +62,7 @@
 //             onClick={() => setCurrentScreen("diary")}
 //             className="bg-orange-100 hover:bg-orange-200 text-orange-800 border-orange-200"
 //           >
-//             너를 추억해
+//             감정일기 보러가기
 //           </Button>
 //           <Button
 //             variant={currentScreen === "collection" ? "default" : "outline"}
@@ -70,7 +70,7 @@
 //             onClick={() => setCurrentScreen("collection")}
 //             className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border-yellow-200"
 //           >
-//             나 보러와
+//             빵 캐릭터 콜렉션
 //           </Button>
 //           <Button
 //             variant={currentScreen === "profile" ? "default" : "outline"}
@@ -78,7 +78,7 @@
 //             onClick={() => setCurrentScreen("profile")}
 //             className="bg-amber-100 hover:bg-amber-200 text-amber-800 border-amber-200"
 //           >
-//             이게 너야
+//             프로필 관리
 //           </Button>
 //         </div>
 //       )}

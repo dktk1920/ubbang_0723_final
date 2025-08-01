@@ -6,6 +6,7 @@ import os, urllib.parse, httpx
 
 from MySql.database import get_db
 from MySql.models import User
+from utils.token_storage import store_refresh_token_to_db
 
 # ✅ JWT 생성 함수 import
 from utils.jwt_utils import create_access_token, create_refresh_token
@@ -95,9 +96,10 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         db.refresh(new_user)
         user = new_user
 
-    # 4. JWT 생성 (Redis 저장 제거)
-    access_token = create_access_token(data={"sub": user.userId})
-    refresh_token = create_refresh_token(data={"sub": user.userId})
+    access_token = create_access_token(data={"sub": str(user.pk)})
+    refresh_token = create_refresh_token(data={"sub": str(user.pk)})
+
+    store_refresh_token_to_db(user, refresh_token, db)  # ✅ 일반 로그인과 동일한 처리
 
     # 5. 최종 응답
     res = JSONResponse(content={
@@ -120,8 +122,10 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        max_age=60 * 60 * 24 * 7,
-        secure=False,  # ⚠️ 실서비스면 True + HTTPS 필수
-        samesite="lax"
+        secure=True,  # ✅ 실서비스용
+        samesite="none",  # ✅ cross-origin 허용
+        domain=".ubbangfeeling.com",  # ✅ 도메인 통일
+        path="/",  # ✅ 모든 경로에 포함되게
+        max_age=60 * 60 * 24 * 7
     )
     return res

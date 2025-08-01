@@ -51,7 +51,7 @@ export default function ProloguePage() {
   const navigationItems = [
     {
       id: "chat",
-      title: "오늘도 고생했어",
+      title: "채팅하기",
       description: "우빵이와 따뜻한 대화를 나눠보세요",
       icon: MessageCircle,
       color: "from-amber-400 to-orange-400",
@@ -61,7 +61,7 @@ export default function ProloguePage() {
     },
     {
       id: "diary",
-      title: "너를 추억해",
+      title: "감정일기 보러가기",
       description: "감정 일기로 하루를 되돌아보세요",
       icon: BookOpen,
       color: "from-orange-400 to-red-400",
@@ -71,7 +71,7 @@ export default function ProloguePage() {
     },
     {
       id: "collection",
-      title: "나 보러와",
+      title: "빵 캐릭터 콜렉션",
       description: "귀여운 빵 친구들을 모아보세요",
       icon: Gift,
       color: "from-yellow-400 to-amber-400",
@@ -81,7 +81,7 @@ export default function ProloguePage() {
     },
     {
       id: "profile",
-      title: "이게 너야",
+      title: "프로필 관리",
       description: "소중한 정보를 확인해보세요",
       icon: Users,
       color: "from-pink-400 to-rose-400",

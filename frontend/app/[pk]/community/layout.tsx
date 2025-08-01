@@ -37,28 +37,28 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
             onClick={() => router.push(`/${pk}/chat`)}
             className="bg-amber-100 hover:bg-amber-200 text-amber-800 border-amber-200"
           >
-            오늘도 고생했어
+            채팅하기
           </Button>
           <Button
             size="sm"
             onClick={() => router.push(`/${pk}/chat/emotion-diary`)}
             className="bg-orange-100 hover:bg-orange-200 text-orange-800 border-orange-200"
           >
-            너를 추억해
+            감정일기 보러가기
           </Button>
           <Button
             size="sm"
             onClick={() => router.push(`/${pk}/chat/character-collection`)}
             className="bg-yellow-100 hover:bg-yellow-200 text-yellow-800 border-yellow-200"
           >
-            나 보러와
+            빵 캐릭터 콜렉션
           </Button>
           <Button
             size="sm"
             onClick={() => router.push(`/${pk}/chat/profile`)}
             className="bg-amber-100 hover:bg-amber-200 text-amber-800 border-amber-200"
           >
-            이게 너야
+            프로필 관리
           </Button>
         </div>
       )}

@@ -143,7 +143,7 @@ useEffect(() => {
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold text-gray-800">이게 너야!</h1>
+          <h1 className="text-2xl font-bold text-gray-800">프로필 관리!</h1>
           <p className="text-gray-600">너에 대한 정보야 잘 확인해~</p>
         </div>
 

@@ -99,7 +99,7 @@ export default function EmotionDiary({ user }: EmotionDiaryProps) {
             </div>
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">너를 추억해</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">감정일기 보러가기</h1>
             <p className="text-gray-600">너와의 이야기를 추억하는 공간이야</p>
           </div>
         </div>
