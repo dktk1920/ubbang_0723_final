@@ -35,7 +35,7 @@ export default function DiaryCreation({ onComplete, onCancel }: DiaryCreationPro
 
     if (!pk) throw new Error("pk 없음")
 
-      const res = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/diary?pk=${pk}`)
+      const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/diary?pk=${pk}`)
 
       const data = await res.json()
 

@@ -9,7 +9,7 @@ export const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
   };
 
-  const response = await fetchwithAuth(url, {
+  const response = await fetch(url, {
     ...options,
     headers,
   });

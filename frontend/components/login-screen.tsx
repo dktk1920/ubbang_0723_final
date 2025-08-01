@@ -35,7 +35,7 @@ export default function LoginScreen() {
 
     try {
       localStorage.removeItem("user")
-      const response = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`, {
+      const response = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, password }),

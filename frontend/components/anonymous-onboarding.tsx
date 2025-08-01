@@ -60,7 +60,7 @@ export default function AnonymousOnboarding({ onComplete, onBack }: AnonymousOnb
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "https://localhost:8000"
 
     try {
-        const response = await fetchwithAuth(`${apiUrl}/users/signup`, {
+        const response = await fetchWithAuth(`${apiUrl}/users/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

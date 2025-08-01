@@ -6,7 +6,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   useEffect(() => {
     const refreshAccessToken = async () => {
       try {
-        const res = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/refresh`, {
+        const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/refresh`, {
           method: "POST",
           credentials: "include", // ✅ 쿠키 포함
         })

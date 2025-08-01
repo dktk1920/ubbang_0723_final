@@ -45,7 +45,7 @@ export default function EmotionDiary({ user }: EmotionDiaryProps) {
       const user = JSON.parse(userRaw)
       const pk = Number(user.pk)
 
-      const res = await fetchwithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/diary?pk=${pk}`)
+      const res = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/diary?pk=${pk}`)
       const data = await res.json()
 
       if (!Array.isArray(data)) {
