@@ -41,7 +41,7 @@ origins = [
 ]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://ubbangfeeling.com", "https://www.ubbangfeeling.com"],  # 개발 시 전체 허용, 배포 시 실제 프론트 주소로 제한
+    allow_origins=origins,  # 개발 시 전체 허용, 배포 시 실제 프론트 주소로 제한
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
