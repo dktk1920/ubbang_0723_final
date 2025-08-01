@@ -3,10 +3,12 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from sqlalchemy.orm import Session
 from datetime import datetime
 import os, urllib.parse, httpx
-from character.character_utils import initialize_user_stats
+
 from MySql.database import get_db
 from MySql.models import User
 from utils.token_storage import store_refresh_token_to_db
+from app.dynamo_utils import init_user_stats
+###############이거 바로 윗줄 추가
 
 # ✅ JWT 생성 함수 import
 from utils.jwt_utils import create_access_token, create_refresh_token
@@ -95,8 +97,7 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         db.commit()
         db.refresh(new_user)
         user = new_user
-
-        initialize_user_stats(user.pk)
+        init_user_stats(user.pk)  ##################여기추가
 
     access_token = create_access_token(data={"sub": str(user.pk)})
     refresh_token = create_refresh_token(data={"sub": str(user.pk)})
@@ -124,10 +125,8 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=True,  # ✅ 실서비스용
-        samesite="none",  # ✅ cross-origin 허용
-        domain=".ubbangfeeling.com",  # ✅ 도메인 통일
-        path="/",  # ✅ 모든 경로에 포함되게
-        max_age=60 * 60 * 24 * 7
+        max_age=60 * 60 * 24 * 7,
+        secure=False,  # ⚠️ 실서비스면 True + HTTPS 필수
+        samesite="lax"
     )
     return res
