@@ -310,11 +310,11 @@ return (
           </Button>
         </div>
 
-<<<<<<< HEAD
+
         {/* 중앙: 걷는 캐릭터 애니메이션 */}
-=======
+
         {/* 중앙: 걷는 캐릭터 애니메이션
->>>>>>> 46c45a2 (메시지)
+
         <div className="relative w-[1000px] h-20 overflow-hidden">
           {walkingCharacters.map((src, i) => {
             const duration = 10 + i * 5;
@@ -335,10 +335,10 @@ return (
               />
             );
           })}
-<<<<<<< HEAD
+
             {/* ✅ style은 가장 바깥 div 안에! */}
-=======
->>>>>>> 46c45a2 (메시지)
+
+
     <style jsx global>{`
       @keyframes walk0 {
         0% {transform: translateX(0) scaleX(1);}
@@ -364,7 +364,7 @@ return (
         100% {transform: translateX(0) scaleX(1);}
       }
     `}</style>
-<<<<<<< HEAD
+
   </div>
 
         {/* 우측: 감정 버튼 그룹 */}
@@ -373,7 +373,7 @@ return (
             size="sm"
             onClick={() => router.push(`/${pk}/prologue`)}
             className="bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-3 py-1.5 rounded-full shadow-sm"
-=======
+
   </div>*/}
 
         {/* 우측: 감정 버튼 그룹 (반응형) */}
@@ -382,7 +382,7 @@ return (
             size="sm"
             onClick={() => router.push(`/${pk}/prologue`)}
             className="bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto"
->>>>>>> 46c45a2 (메시지)
+
           >
             메인 페이지
           </Button>
@@ -390,11 +390,11 @@ return (
           <Button
             size="sm"
             disabled
-<<<<<<< HEAD
+
             className="bg-amber-100 text-amber-800 font-medium px-3 py-1.5 rounded-full shadow-sm cursor-default"
-=======
+
             className="bg-amber-100 text-amber-800 font-medium px-3 py-1.5 rounded-full shadow-sm cursor-default w-full sm:w-auto"
->>>>>>> 46c45a2 (메시지)
+
           >
             오늘도 고생했어
           </Button>
@@ -403,18 +403,18 @@ return (
             size="sm"
             onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/emotion-diary`) : undefined}
             disabled={user?.isAnonymous}
-<<<<<<< HEAD
+
             className={`font-medium px-3 py-1.5 rounded-full shadow-sm
               ${user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-orange-100 hover:bg-orange-200 text-orange-800"}`}
-=======
+
             className={`font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto ${
               user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-orange-100 hover:bg-orange-200 text-orange-800"
             }`}
->>>>>>> 46c45a2 (메시지)
+
           >
             너를 추억해
           </Button>
@@ -423,18 +423,18 @@ return (
             size="sm"
             onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/character-collection`) : undefined}
             disabled={user?.isAnonymous}
-<<<<<<< HEAD
+
             className={`font-medium px-3 py-1.5 rounded-full shadow-sm
               ${user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800"}`}
-=======
+
             className={`font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto ${
               user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800"
             }`}
->>>>>>> 46c45a2 (메시지)
+
           >
             나 보러와
           </Button>
@@ -442,11 +442,11 @@ return (
           <Button
             size="sm"
             onClick={() => router.push(`/${pk}/chat/profile`)}
-<<<<<<< HEAD
+
             className="bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-3 py-1.5 rounded-full shadow-sm"
-=======
+
             className="bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto"
->>>>>>> 46c45a2 (메시지)
+
           >
             이게 너야
           </Button>

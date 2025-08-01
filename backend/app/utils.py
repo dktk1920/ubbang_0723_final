@@ -114,18 +114,18 @@ def ask_gpt_for_image_prompt_from_summary(summary: str) -> str:
     - Flat pastel colors with vintage paper texture
     - No glossy eyes, no glossy lighting, no hair detail!!!!!!! plz
     - Characters must be symbolic, simplified, and not realistic
-<<<<<<< HEAD
+ HEAD
     - Keep the composition simple and avoid overly decorative or flashy elements
     - Do not include any text, letters, signs, or writing in the image !!!!! plz!!!!!!
     
-=======
+
     - Full-body, front-facing view with simple composition
     - Flat pastel background with soft tone
     - Do not include any text, letters, or writing!!!
     - Include character pose + emotion + background + style in a natural sentence
     - Create a background based on summarized chat content
 
->>>>>>> 46c45a2 (메시지)
+
     📌 Prompt Instructions:
     - Focus on emotional storytelling through cozy or imaginative scenes
     - Output only the prompt sentence, no explanation
