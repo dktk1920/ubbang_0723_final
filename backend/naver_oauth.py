@@ -25,10 +25,10 @@ def naver_login():
         f"https://nid.naver.com/oauth2.0/authorize?"
         f"response_type=code"
         f"&client_id={client_id}"
-        f"&redirect_uri={redirect_uri}"
+        f"&redirect_uri={urllib.parse.quote(redirect_uri)}"
         f"&state={state}"
     )
-
+    print("✅ 네이버 로그인 URL:", login_url)  # <- 로그 찍기
     return RedirectResponse(login_url)
 
 

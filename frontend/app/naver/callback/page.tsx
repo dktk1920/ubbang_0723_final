@@ -10,6 +10,7 @@ function CallbackHandler() {
   const router = useRouter();
 
   useEffect(() => {
+      console.log("📢 useEffect 실행됨");
     const exchangeCode = async () => {
       const code = searchParams.get("code");
       const state = searchParams.get("state");
