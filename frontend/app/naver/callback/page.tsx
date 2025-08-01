@@ -14,10 +14,14 @@ function CallbackHandler() {
       const code = searchParams.get("code");
       const state = searchParams.get("state");
 
+          // ✅ 여기에서 console.log로 값 확인
+      console.log("📌 code:", code);
+      console.log("📌 state:", state);
+
       if (!code) return;
 
       try {
-        const response = await fetchWithAuth(`${process.env.NEXT_PUBLIC_API_BASE_URL}/naver/token`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/naver/token`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ code, state }),
