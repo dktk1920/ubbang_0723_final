@@ -99,7 +99,7 @@ useEffect(() => {
       if (!confirmDelete) return;
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/delete-user`, {
-          method: "DELETE",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },

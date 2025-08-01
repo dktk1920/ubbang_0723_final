@@ -87,7 +87,7 @@ async def create_user_alias(user: UserCreate, db: Session = Depends(get_db)):
 class DeleteRequest(BaseModel):
     userId: str
 
-@app.delete("/delete-user")
+@app.post("/delete-user")
 async def delete_user(request: DeleteRequest = Body(...), db: Session = Depends(get_db)):
     logger.info(f"🗑️ 사용자 삭제 요청: {request.userId}")
     user_to_delete = db.query(models.User).filter(models.User.userId == request.userId).first()
