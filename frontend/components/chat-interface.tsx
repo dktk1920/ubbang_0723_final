@@ -238,11 +238,10 @@ useEffect(() => {
         return;
       }
 
-      const filtered = data.filter((item: any) => {
-        const diaryDate =
-          item.diary_date || getDiaryDateFromTimestamp(new Date(item.timestamp).getTime());
-        return diaryDate === today;
-      });
+    const filtered = data.filter((item: any) => {
+      const diaryDate = item.diary_date ?? getDiaryDateFromTimestamp(item.timestamp);
+      return diaryDate === today;
+    });
 
       console.log("📅 오늘 날짜:", today);
       console.log("✅ 필터된 메시지 수:", filtered.length);
