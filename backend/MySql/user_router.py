@@ -177,26 +177,26 @@ def signup(user: UserCreate, response: Response, db: Session = Depends(get_db)):
         store_refresh_token_to_db(new_user, refresh_token, db)
 
         # ✅ 쿠키에 refresh_token 저장
-        # response.set_cookie(
-        #     key="refresh_token",
-        #     value=refresh_token,
-        #     httponly=True,
-        #     secure=False, # ✅ HTTPS 환경이면 True
-        #     samesite="lax",
-        #     max_age=60 * 60 * 24 * 7,
-        #     path="/"
-        # )
-        # FastAPI 배포 환경
         response.set_cookie(
             key="refresh_token",
             value=refresh_token,
             httponly=True,
-            secure=True,  # ✅ HTTPS만 허용
-            samesite="none",  # ✅ cross-origin 허용
-            domain=".ubbangfeeling.com",  # ✅ 선택: 전체 도메인 공유할 때
-            path="/",
+            secure=False, # ✅ HTTPS 환경이면 True
+            samesite="lax",
             max_age=60 * 60 * 24 * 7,
+            path="/"
         )
+        # # FastAPI 배포 환경
+        # response.set_cookie(
+        #     key="refresh_token",
+        #     value=refresh_token,
+        #     httponly=True,
+        #     secure=True,  # ✅ HTTPS만 허용
+        #     samesite="none",  # ✅ cross-origin 허용
+        #     domain=".ubbangfeeling.com",  # ✅ 선택: 전체 도메인 공유할 때
+        #     path="/",
+        #     max_age=60 * 60 * 24 * 7,
+        # )
 
         # ✅ 프론트로 access_token 전달
         return {
@@ -249,25 +249,25 @@ def login(data: LoginRequest = Body(...), db: Session = Depends(get_db)):
         "tf": user.tf
     })
 
-    # response.set_cookie(
-    #     key="refresh_token",
-    #     value=refresh_token,
-    #     httponly=True,
-    #     secure=False,  # ✅ HTTPS 환경이면 True
-    #     samesite="lax",
-    #     max_age=60 * 60 * 24 * 7
-    # )
-    # FastAPI 배포 환경
     response.set_cookie(
         key="refresh_token",
         value=refresh_token,
         httponly=True,
-        secure=True,  # ✅ HTTPS만 허용
-        samesite="none",  # ✅ cross-origin 허용
-        domain=".ubbangfeeling.com",  # ✅ 선택: 전체 도메인 공유할 때
-        path="/",
-        max_age=60 * 60 * 24 * 7,
+        secure=False,  # ✅ HTTPS 환경이면 True
+        samesite="lax",
+        max_age=60 * 60 * 24 * 7
     )
+    # # FastAPI 배포 환경
+    # response.set_cookie(
+    #     key="refresh_token",
+    #     value=refresh_token,
+    #     httponly=True,
+    #     secure=True,  # ✅ HTTPS만 허용
+    #     samesite="none",  # ✅ cross-origin 허용
+    #     domain=".ubbangfeeling.com",  # ✅ 선택: 전체 도메인 공유할 때
+    #     path="/",
+    #     max_age=60 * 60 * 24 * 7,
+    # )
 
     return response
 

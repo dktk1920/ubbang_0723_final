@@ -1,16 +1,4 @@
 export function getDiaryDateFromTimestamp(ts: number): string {
- 
-  const date = new Date(ts);
-
-  // UTC -> KST 보정
-  const kstDate = new Date(date.getTime() + 9 * 60 * 60 * 1000);
-
-  const kstHour = kstDate.getUTCHours(); // KST 기준 시간
-  if (kstHour < 6) {
-    kstDate.setUTCDate(kstDate.getUTCDate() - 1);
-  }
-
-
   // UTC 시간 기준 Date 생성
   const utcDate = new Date(ts);
 
@@ -24,13 +12,8 @@ export function getDiaryDateFromTimestamp(ts: number): string {
   }
 
   // YYYY-MM-DD 형식 반환
-
   return kstDate.toISOString().slice(0, 10);
 }
-
-
- 
-
 
 
 // export function getDiaryDateFromTimestamp(ts: number): string {

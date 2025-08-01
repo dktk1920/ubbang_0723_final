@@ -310,11 +310,7 @@ return (
           </Button>
         </div>
 
-
-        {/* 중앙: 걷는 캐릭터 애니메이션 */}
-
         {/* 중앙: 걷는 캐릭터 애니메이션
-
         <div className="relative w-[1000px] h-20 overflow-hidden">
           {walkingCharacters.map((src, i) => {
             const duration = 10 + i * 5;
@@ -335,10 +331,6 @@ return (
               />
             );
           })}
-
-            {/* ✅ style은 가장 바깥 div 안에! */}
-
-
     <style jsx global>{`
       @keyframes walk0 {
         0% {transform: translateX(0) scaleX(1);}
@@ -364,16 +356,6 @@ return (
         100% {transform: translateX(0) scaleX(1);}
       }
     `}</style>
-
-  </div>
-
-        {/* 우측: 감정 버튼 그룹 */}
-        <div className="flex flex-row items-center space-x-2 justify-end min-w-[300px]">
-          <Button
-            size="sm"
-            onClick={() => router.push(`/${pk}/prologue`)}
-            className="bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-3 py-1.5 rounded-full shadow-sm"
-
   </div>*/}
 
         {/* 우측: 감정 버튼 그룹 (반응형) */}
@@ -382,7 +364,6 @@ return (
             size="sm"
             onClick={() => router.push(`/${pk}/prologue`)}
             className="bg-pink-100 hover:bg-pink-200 text-pink-800 font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto"
-
           >
             메인 페이지
           </Button>
@@ -390,11 +371,7 @@ return (
           <Button
             size="sm"
             disabled
-
-            className="bg-amber-100 text-amber-800 font-medium px-3 py-1.5 rounded-full shadow-sm cursor-default"
-
             className="bg-amber-100 text-amber-800 font-medium px-3 py-1.5 rounded-full shadow-sm cursor-default w-full sm:w-auto"
-
           >
             오늘도 고생했어
           </Button>
@@ -403,18 +380,11 @@ return (
             size="sm"
             onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/emotion-diary`) : undefined}
             disabled={user?.isAnonymous}
-
-            className={`font-medium px-3 py-1.5 rounded-full shadow-sm
-              ${user?.isAnonymous
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-orange-100 hover:bg-orange-200 text-orange-800"}`}
-
             className={`font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto ${
               user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-orange-100 hover:bg-orange-200 text-orange-800"
             }`}
-
           >
             너를 추억해
           </Button>
@@ -423,18 +393,11 @@ return (
             size="sm"
             onClick={!user?.isAnonymous ? () => router.push(`/${pk}/chat/character-collection`) : undefined}
             disabled={user?.isAnonymous}
-
-            className={`font-medium px-3 py-1.5 rounded-full shadow-sm
-              ${user?.isAnonymous
-                ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800"}`}
-
             className={`font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto ${
               user?.isAnonymous
                 ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                 : "bg-yellow-100 hover:bg-yellow-200 text-yellow-800"
             }`}
-
           >
             나 보러와
           </Button>
@@ -442,11 +405,7 @@ return (
           <Button
             size="sm"
             onClick={() => router.push(`/${pk}/chat/profile`)}
-
-            className="bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-3 py-1.5 rounded-full shadow-sm"
-
             className="bg-lime-100 hover:bg-lime-200 text-lime-800 font-medium px-3 py-1.5 rounded-full shadow-sm w-full sm:w-auto"
-
           >
             이게 너야
           </Button>

@@ -32,7 +32,7 @@ def send_push():
         payload = json.dumps({
             "title": "👋 체크인 시간이에요!",
             "body": "오늘 하루 어땠는지 일기 쓰러 와주세요 😊",
-            "url": "https://localhost:3000"
+            "url": "http://localhost:3000"
         })
 
         webpush(

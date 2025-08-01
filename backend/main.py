@@ -32,13 +32,11 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     logger.error("OPENAI_API_KEY 환경 변수가 설정되지 않았습니다.")
 client = OpenAI(api_key=OPENAI_API_KEY)
-#
+
 app = FastAPI()
 origins = [
-
-    "https://ubbangfeeling.com",
-    "https://www.ubbangfeeling.com"
-
+    "http://localhost:3000",
+    "http://192.168.0.39:3000"
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -49,13 +47,13 @@ app.add_middleware(
 )
 
 
-app.include_router(chat.router, prefix="/api")
-app.include_router(user_router, prefix="/api")
-app.include_router(naver_router, prefix="/api")
-app.include_router(push_router, prefix="/api")
-app.include_router(diary_router, prefix="/api/diary")
-app.include_router(character_router, prefix="/api")
-app.include_router(weather_router, prefix="/api")
+app.include_router(chat.router)
+app.include_router(user_router)
+app.include_router(naver_router)
+app.include_router(push_router)
+app.include_router(diary_router, prefix="/diary")
+app.include_router(character_router)
+app.include_router(weather_router)
 
 try:
     Base.metadata.create_all(bind=engine)
@@ -134,7 +132,7 @@ async def chat_with_ai(chat: ChatInput):
         ]
         try:
             response = await client.chat.completions.create(
-                model="gpt-4o",
+                model="gpt-3.5-turbo",
                 messages=prompt_messages
             )
             reply_text = response.choices[0].message.content.strip()

@@ -42,7 +42,7 @@ async def classify_topic(user_text: str) -> Optional[str]:
 
     try:
         response = await client.chat.completions.create(
-            model="gpt-4o",
+            model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.2,
         )
