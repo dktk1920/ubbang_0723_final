@@ -1,4 +1,5 @@
 "use client";
+
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, Suspense } from "react";
 
@@ -9,44 +10,27 @@ function CallbackHandler() {
   const router = useRouter();
 
   useEffect(() => {
-    const code = searchParams.get("code");
-    const state = searchParams.get("state");
-
-    if (!code) return;
-
     const exchangeCode = async () => {
+      const code = searchParams.get("code");
+      const state = searchParams.get("state");
+
+      if (!code) return;
+
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/naver/token`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ code, state }),
-          }
-        );
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/naver/token`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code, state }),
+        });
 
         const result = await response.json();
         console.log("✅ 로그인 결과:", result);
 
         if (result.success) {
-          const user = result.user;
-          const access_token = result.access_token;
-
-          localStorage.setItem(
-            "user",
-            JSON.stringify({
-              ...user,
-              access_token,
-            })
-          );
-
-          const pk = user.pk;
-          if (!pk) {
-            alert("로그인에는 성공했지만 pk가 없습니다.");
-            return;
-          }
-
-          router.push(`/${pk}/chat`);
+          const { user, access_token } = result;
+          localStorage.setItem("user", JSON.stringify({ ...user, access_token }));
+          router.push(`/${user.pk}/chat`);
+          return;
         } else {
           alert("로그인 실패");
         }
