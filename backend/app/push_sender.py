@@ -31,7 +31,8 @@ def send_push():
 
         payload = json.dumps({
             "title": "👋 체크인 시간이에요!",
-            "body": "오늘 하루 어땠는지 일기 쓰러 와주세요 😊"
+            "body": "오늘 하루 어땠는지 일기 쓰러 와주세요 😊",
+            "url": "https://localhost:3000"
         })
 
         webpush(
@@ -49,3 +50,6 @@ def send_push():
         print("❌ 푸시 발송 실패:", ex)
     except FileNotFoundError:
         print("⚠️ 구독 정보 파일이 존재하지 않습니다.")
+
+if __name__ == "__main__":
+    send_push()

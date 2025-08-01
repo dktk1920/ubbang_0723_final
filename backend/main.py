@@ -35,8 +35,13 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 #
 app = FastAPI()
 origins = [
+<<<<<<< HEAD
     "https://ubbangfeeling.com",
     "https://www.ubbangfeeling.com"
+=======
+    "https://www.ubbangfeeling.com",
+    "https://ubbangfeeling.com"
+>>>>>>> 46c45a2 (메시지)
 ]
 app.add_middleware(
     CORSMiddleware,

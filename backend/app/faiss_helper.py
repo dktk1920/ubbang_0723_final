@@ -14,8 +14,8 @@ embedding_model = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"))
 
 # 텍스트 분할 설정
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=300,
-    chunk_overlap=30
+    chunk_size=400,
+    chunk_overlap=35
 )
 
 # ✅ 중복 체크 함수 (유사도 기반)

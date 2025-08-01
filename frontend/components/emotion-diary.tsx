@@ -62,7 +62,7 @@ export default function EmotionDiary({ user }: EmotionDiaryProps) {
         emotion_level: entry.emotion_level ?? 3,
         message : entry.message ?? "",
       }))
-
+      parsed.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       setDiaryEntries(parsed)
     }
 
