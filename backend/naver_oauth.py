@@ -40,6 +40,10 @@ async def naver_token(req: Request, db: Session = Depends(get_db)):
     code = data.get("code")
     state = data.get("state")
 
+    print("✅ NAVER_TOKEN 요청 수신됨")
+    print("📌 전달된 code:", code)
+    print("📌 전달된 state:", state)
+
     # 1. access token 요청
     async with httpx.AsyncClient() as client:
         token_resp = await client.post(
