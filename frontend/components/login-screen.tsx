@@ -59,7 +59,8 @@ export default function LoginScreen() {
         birthDate: data.birthDate,
         loginMethod: "이메일 계정",
         age: data.age,
-        tf: data.tf
+        tf: data.tf,
+        access_token: data.access_token  // ✅ 추가!
       }
       localStorage.setItem("user", JSON.stringify(userData))
       router.push(`/${userData.pk}/prologue`)
