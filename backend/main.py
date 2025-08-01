@@ -10,6 +10,7 @@ from pydantic import BaseModel
 from MySql import models
 from dotenv import load_dotenv
 from openai import OpenAI
+from fastapi import Body
 from datetime import datetime, timedelta
 import os
 import logging
@@ -35,8 +36,8 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 app = FastAPI()
 origins = [
-    "https://www.ubbangfeeling.com",
-    "https://ubbangfeeling.com"
+    "http://localhost:3000",
+    "http://192.168.0.39:3000"
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -47,13 +48,13 @@ app.add_middleware(
 )
 
 
-app.include_router(chat.router, prefix="/api")
-app.include_router(user_router, prefix="/api")
-app.include_router(naver_router, prefix="/api")
-app.include_router(push_router, prefix="/api")
-app.include_router(diary_router, prefix="/api/diary")
-app.include_router(character_router, prefix="/api")
-app.include_router(weather_router, prefix="/api")
+app.include_router(chat.router)
+app.include_router(user_router)
+app.include_router(naver_router)
+app.include_router(push_router)
+app.include_router(diary_router, prefix="/diary")
+app.include_router(character_router)
+app.include_router(weather_router)
 
 try:
     Base.metadata.create_all(bind=engine)
@@ -86,8 +87,8 @@ async def create_user_alias(user: UserCreate, db: Session = Depends(get_db)):
 class DeleteRequest(BaseModel):
     userId: str
 
-@app.post("/delete-user")
-async def delete_user(request: DeleteRequest, db: Session = Depends(get_db)):
+@app.delete("/delete-user")
+async def delete_user(request: DeleteRequest = Body(...), db: Session = Depends(get_db)):
     logger.info(f"🗑️ 사용자 삭제 요청: {request.userId}")
     user_to_delete = db.query(models.User).filter(models.User.userId == request.userId).first()
     if not user_to_delete:
