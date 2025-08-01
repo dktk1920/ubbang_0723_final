@@ -3,7 +3,7 @@ from fastapi.responses import RedirectResponse, JSONResponse
 from sqlalchemy.orm import Session
 from datetime import datetime
 import os, urllib.parse, httpx
-
+from character.character_utils import initialize_user_stats
 from MySql.database import get_db
 from MySql.models import User
 from utils.token_storage import store_refresh_token_to_db
