@@ -1,5 +1,4 @@
 "use client"
-
 import PushSubscriber from "@/components/PushSubscriber"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -15,7 +14,6 @@ import {
   SelectValue
 } from "@/components/ui/select"
 import { User, Bell, Shield, LogOut } from "lucide-react"
-
 interface UserData {
   pk: number
   name: string
@@ -29,16 +27,13 @@ interface UserData {
   pushEnabled?: boolean
   pushTime?: string
 }
-
 export default function ProfileSettings() {
   const router = useRouter()
-
   const [user, setUser] = useState<UserData | null>(null)
   const [isEditing, setIsEditing] = useState(false)
   const [editData, setEditData] = useState<UserData | null>(null)
   const [notifications, setNotifications] = useState(true)
   const [notificationTime, setNotificationTime] = useState("20:00")
-
 useEffect(() => {
   const storedUser = localStorage.getItem("user")
   if (storedUser) {
@@ -49,15 +44,12 @@ useEffect(() => {
     setNotificationTime(parsedUser.pushTime ?? "20:00")
   }
 }, [])
-
 /*로그아웃시에 localStorage에 있는 데이터 삭제 */
   const onLogout = () => {
     localStorage.clear()
     sessionStorage.clear()
     router.push("/")
-
     const loginMethod = user?.loginMethod
-
     if (loginMethod === "naver") {
       window.location.href = "https://nid.naver.com/nidlogin.logout"
        router.push("/")
@@ -65,10 +57,8 @@ useEffect(() => {
       router.push("/")
     }
   }
-
     const handleSave = async () => {
       if (!editData) return
-
       const payload = {
         pk: Number(editData.pk),
         name: editData.name || "",        // ❗ ""이라도 보내기
@@ -80,20 +70,17 @@ useEffect(() => {
         pushTime: notificationTime,
       }
       console.log("📦 PATCH 보내는 데이터:", payload)
-
       try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/users/update-user`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         })
-
         if (!response.ok) {
           const err = await response.json()
           alert(err.detail || "수정 실패")
           return
         }
-
         const updatedUser = await response.json()
          setUser(updatedUser)
          setEditData(updatedUser)
@@ -107,46 +94,41 @@ useEffect(() => {
         alert("서버 오류")
       }
     }
-  const handleDeleteAccount = async () => {
-    const confirmDelete = window.confirm("정말 계정을 삭제하시겠어요?")
-    if (!confirmDelete) return
-
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/delete-user`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId: user?.userId })
-      })
-
-      if (!response.ok) {
-        const err = await response.json()
-        alert(err.detail || "계정 삭제 실패")
-        return
+    const handleDeleteAccount = async () => {
+      const confirmDelete = window.confirm("정말 계정을 삭제하시겠어요?");
+      if (!confirmDelete) return;
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/delete-user`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: user?.userId }),
+        });
+        if (!response.ok) {
+          const err = await response.json();
+          alert(err.detail || "계정 삭제 실패");
+          return;
+        }
+        alert("계정이 삭제되었습니다.");
+        localStorage.removeItem("user");
+        onLogout();
+      } catch (err) {
+        console.error("삭제 요청 실패:", err);
+        alert("서버 오류");
       }
-
-      alert("계정이 삭제되었습니다.")
-      localStorage.removeItem("user")
-      onLogout()
-    } catch (err) {
-      console.error("삭제 요청 실패:", err)
-      alert("서버 오류")
-    }
-  }
-
-
+    };
   if (!user || !editData)
     return <div className="text-center mt-10 text-gray-500">유저 정보를 불러오는 중...</div>
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 p-4">
           {/* ✅ 여기에 임시 테스트용 PushSubscriber 삽입 */}
       <div className="max-w-2xl mx-auto space-y-6">
         {/* Header */}
         <div className="text-center space-y-2">
-          <h1 className="text-2xl font-bold text-gray-800">프로필 관리!</h1>
+          <h1 className="text-2xl font-bold text-gray-800">이게 너야!</h1>
           <p className="text-gray-600">너에 대한 정보야 잘 확인해~</p>
         </div>
-
         {/* Profile Info */}
         <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader>
@@ -169,13 +151,11 @@ useEffect(() => {
                 <div className="px-3 py-2 bg-gray-50 rounded-lg text-gray-800">{user.name}</div>
               )}
             </div>
-
             {/* 아이디 */}
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">아이디</label>
               <div className="px-3 py-2 bg-gray-50 rounded-lg text-gray-800">{user.userId}</div>
             </div>
-
             {/* 성별 */}
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">성별</label>
@@ -196,7 +176,6 @@ useEffect(() => {
                 <div className="px-3 py-2 bg-gray-50 rounded-lg text-gray-800">{user.gender}</div>
               )}
             </div>
-
             {/* 말투 */}
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">말투</label>
@@ -219,7 +198,6 @@ useEffect(() => {
                 </div>
               )}
             </div>
-
             {/* 성향 */}
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">성향</label>
@@ -242,7 +220,6 @@ useEffect(() => {
                 </div>
               )}
             </div>
-
             {/* 고민 */}
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">최근 고민</label>
@@ -257,13 +234,11 @@ useEffect(() => {
                 </div>
               )}
             </div>
-
             {/* 생년월일 */}
             <div className="space-y-1">
               <label className="text-sm font-medium text-gray-700">생년월일</label>
               <div className="px-3 py-2 bg-gray-50 rounded-lg text-gray-800">{user.birthDate}</div>
             </div>
-
             {/* 프로필 수정 버튼 */}
             <div className="flex justify-end space-x-2 pt-2">
               {isEditing ? (
@@ -289,7 +264,6 @@ useEffect(() => {
             </div>
           </CardContent>
         </Card>
-
         {/* 알림 설정 */}
         <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader>
@@ -346,7 +320,6 @@ useEffect(() => {
                   alert(err.detail || "알림 설정 저장 실패")
                   return
                 }
-
                 // ✅ 상태 갱신
                 const updatedUser = {
                   ...user,
@@ -355,7 +328,6 @@ useEffect(() => {
                 }
                 setUser(updatedUser)
                 localStorage.setItem("user", JSON.stringify(updatedUser))
-
                 alert("🔔 알림 설정이 저장되었어요!")
               }}
               className="bg-orange-500 hover:bg-orange-600 text-white"
@@ -365,10 +337,8 @@ useEffect(() => {
             </div>
           </CardContent>
         </Card>
-
         {/* ✅ 푸시 구독 컴포넌트 삽입 */}
         <PushSubscriber enabled={notifications} time={notificationTime} />
-
         {/* 계정 삭제 */}
         <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardHeader>
@@ -394,7 +364,6 @@ useEffect(() => {
             </Button>
           </CardContent>
         </Card>
-
         {/* 로그아웃 */}
         <Card className="shadow-lg border-0 bg-white/80 backdrop-blur-sm">
           <CardContent className="pt-6">
